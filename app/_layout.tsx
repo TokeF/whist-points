@@ -9,9 +9,8 @@ export default function Layout() {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="(screens)/index" />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(screens)/GameSetup" />
-        <Stack.Screen name="(screens)/GameScreen" />
       </Stack>
     </SafeAreaProvider>
   );

@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView, Text, TouchableOpacity } from "react-native";
 import { Link } from "expo-router";
 import GlobalStyles from "../styles/GlobalStyles";
 
 const GameSetup = () => {
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         justifyContent: "center",
@@ -13,12 +13,12 @@ const GameSetup = () => {
       }}
     >
       <Text>Game Setup</Text>
-      <Link href="/GameScreen">
+      <Link href="/GameScreen" asChild>
         <TouchableOpacity style={GlobalStyles.button}>
           <Text style={GlobalStyles.buttonText}>Go to Game</Text>
         </TouchableOpacity>
       </Link>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,10 +1,10 @@
 import React from "react";
-import { View } from "react-native";
 import ScoreBoard from "../components/ScoreBoard";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const GameScreen = () => {
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         justifyContent: "center",
@@ -12,7 +12,7 @@ const GameScreen = () => {
       }}
     >
       <ScoreBoard />
-    </View>
+    </SafeAreaView>
   );
 };
 
