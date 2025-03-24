@@ -10,7 +10,8 @@ export default function Layout() {
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(screens)/GameSetup" />
+        <Stack.Screen name="(screens)/SelectNames" />
+        <Stack.Screen name="(screens)/SelectStrategy" />
       </Stack>
     </SafeAreaProvider>
   );

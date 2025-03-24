@@ -4,18 +4,24 @@ import ScoreBoard from "../components/ScoreBoard";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const GameScreen = () => {
-  const { strategy } = useLocalSearchParams<{ strategy: string }>();
+  const { strategy, playerNames } = useLocalSearchParams<{
+    strategy: string;
+    playerNames: string[];
+  }>();
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <ScoreBoard strategy={strategy} />
-    </SafeAreaView>
+    console.log(strategy, playerNames),
+    (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ScoreBoard strategy={strategy} />
+      </SafeAreaView>
+    )
   );
 };
 

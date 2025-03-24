@@ -11,6 +11,7 @@ const GlobalStyles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
   },
+  input: {},
 });
 
 export default GlobalStyles;

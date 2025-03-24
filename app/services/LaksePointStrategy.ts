@@ -1,6 +1,6 @@
-import { PointStrategy } from "./IPointStrategy";
+import IPointStrategy from "./IPointStrategy";
 
-export class LaksePointStrategy implements PointStrategy {
+export default class LaksePointStrategy implements IPointStrategy {
   calculatePoints(currentPoints: number): number {
     return currentPoints + 1;
   }

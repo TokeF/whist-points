@@ -14,7 +14,7 @@ const index = () => {
       }}
     >
       <Text>Welcome to Whist Points Tracker</Text>
-      <Link href="/GameSetup" asChild>
+      <Link href="/SelectNames" asChild>
         <TouchableOpacity style={GlobalStyles.button}>
           <Text style={GlobalStyles.buttonText}>New Game</Text>
         </TouchableOpacity>
