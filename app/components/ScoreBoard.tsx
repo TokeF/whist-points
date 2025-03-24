@@ -4,7 +4,7 @@ import { Player } from "../models/types";
 import PointService from "../services/PointService";
 import GlobalStyles from "../styles/GlobalStyles";
 
-const ScoreBoard = () => {
+const ScoreBoard = ({ strategy }: { strategy: string }) => {
   const [players, setPlayers] = useState<Player[]>([
     { name: "Player 1", score: 0 },
     { name: "Player 2", score: 0 },
@@ -12,6 +12,7 @@ const ScoreBoard = () => {
     { name: "Player 4", score: 0 },
   ]);
 
+  console.log(strategy);
   const addPoint = (index: number) => {
     const newPlayers = [...players];
     newPlayers[index].score = PointService.addPoint(newPlayers[index].score);

@@ -1,8 +1,11 @@
 import React from "react";
+import { useLocalSearchParams } from "expo-router";
 import ScoreBoard from "../components/ScoreBoard";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const GameScreen = () => {
+  const { strategy } = useLocalSearchParams<{ strategy: string }>();
+
   return (
     <SafeAreaView
       style={{
@@ -11,7 +14,7 @@ const GameScreen = () => {
         alignItems: "center",
       }}
     >
-      <ScoreBoard />
+      <ScoreBoard strategy={strategy} />
     </SafeAreaView>
   );
 };
