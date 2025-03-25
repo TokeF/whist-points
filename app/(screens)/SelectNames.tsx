@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Link } from "expo-router";
 import GlobalStyles from "../styles/GlobalStyles";
+import { FontAwesome } from "@expo/vector-icons";
 
 const EnterNames = () => {
   const [playerNames, setPlayerNames] = useState<string[]>(["", "", "", ""]);
@@ -22,6 +23,10 @@ const EnterNames = () => {
   const handleRemoveName = (index: number) => {
     const newNames = playerNames.filter((_, i) => i !== index);
     setPlayerNames(newNames);
+  };
+
+  const AddName = () => {
+    setPlayerNames([...playerNames, ""]);
   };
 
   return (
@@ -51,6 +56,9 @@ const EnterNames = () => {
           </TouchableOpacity>
         </View>
       ))}
+      <TouchableOpacity style={styles.addButton} onPress={() => AddName()}>
+        <FontAwesome name={"plus-square-o"} size={24} color="green" />
+      </TouchableOpacity>
       <Link
         href={{
           pathname: "/SelectStrategy",
@@ -79,6 +87,10 @@ const styles = StyleSheet.create({
   removeButton: {
     flex: 1,
     marginLeft: 10,
+  },
+  addButton: {
+    padding: 10,
+    alignItems: "center",
   },
 });
 
