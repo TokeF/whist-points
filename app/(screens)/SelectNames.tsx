@@ -30,14 +30,7 @@ const EnterNames = () => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 20,
-      }}
-    >
+    <SafeAreaView style={GlobalStyles.safeArea}>
       <Text style={{ fontSize: 24, marginBottom: 20 }}>Enter Player Names</Text>
       {playerNames.map((name, index) => (
         <View key={index} style={styles.nameContainer}>
