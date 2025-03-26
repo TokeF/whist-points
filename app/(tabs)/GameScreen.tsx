@@ -10,7 +10,7 @@ const GameScreen = () => {
   }>();
 
   return (
-    console.log(strategy, playerNames),
+    console.log("game screen ", strategy, playerNames),
     (
       <SafeAreaView
         style={{
@@ -19,7 +19,7 @@ const GameScreen = () => {
           alignItems: "center",
         }}
       >
-        <ScoreBoard strategy={strategy} />
+        <ScoreBoard strategy={strategy} playerNames={playerNames} />
       </SafeAreaView>
     )
   );

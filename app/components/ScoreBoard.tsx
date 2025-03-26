@@ -1,18 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Player } from "../models/types";
 import PointService from "../services/PointService";
 import GlobalStyles from "../styles/GlobalStyles";
 
-const ScoreBoard = ({ strategy }: { strategy: string }) => {
-  const [players, setPlayers] = useState<Player[]>([
-    { name: "Player 1", score: 0 },
-    { name: "Player 2", score: 0 },
-    { name: "Player 3", score: 0 },
-    { name: "Player 4", score: 0 },
-  ]);
+const ScoreBoard = ({
+  strategy,
+  playerNames,
+}: {
+  strategy: string;
+  playerNames: string[];
+}) => {
+  const [players, setPlayers] = useState<Player[]>([]);
 
-  console.log(strategy);
+  console.log("scoreboard", strategy, playerNames);
+
+  useEffect(() => {
+    console.log("setting players", typeof playerNames);
+    if (playerNames && playerNames.length > 0) {
+      console.log("setting sdsddsdsdsds", playerNames);
+
+      const initialPlayers = playerNames.map((name) => ({ name, score: 0 }));
+      setPlayers(initialPlayers);
+    }
+  }, [playerNames]);
+
   const addPoint = (index: number) => {
     const newPlayers = [...players];
     newPlayers[index].score = PointService.addPoint(newPlayers[index].score);

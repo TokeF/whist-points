@@ -7,11 +7,12 @@ import {
   View,
   StyleSheet,
 } from "react-native";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import GlobalStyles from "../styles/GlobalStyles";
 import { FontAwesome } from "@expo/vector-icons";
 
 const EnterNames = () => {
+  const router = useRouter();
   const [playerNames, setPlayerNames] = useState<string[]>(["", "", "", ""]);
 
   const handleNameChange = (index: number, name: string) => {
@@ -25,8 +26,19 @@ const EnterNames = () => {
     setPlayerNames(newNames);
   };
 
-  const AddName = () => {
+  const addName = () => {
     setPlayerNames([...playerNames, ""]);
+  };
+
+  const handleNext = () => {
+    // set default names if empty
+    const newNames = playerNames.map((x, i) =>
+      x === "" ? `Player ${i + 1}` : x
+    );
+    router.push({
+      pathname: "/SelectStrategy",
+      params: { playerNames: newNames },
+    });
   };
 
   return (
@@ -49,20 +61,13 @@ const EnterNames = () => {
           </TouchableOpacity>
         </View>
       ))}
-      <TouchableOpacity style={styles.addButton} onPress={() => AddName()}>
+      <TouchableOpacity style={styles.addButton} onPress={() => addName()}>
         <FontAwesome name={"plus-square-o"} size={24} color="green" />
       </TouchableOpacity>
-      <Link
-        href={{
-          pathname: "/SelectStrategy",
-          params: { playerNames },
-        }}
-        asChild
-      >
-        <TouchableOpacity style={GlobalStyles.button}>
-          <Text style={GlobalStyles.buttonText}>Next</Text>
-        </TouchableOpacity>
-      </Link>
+
+      <TouchableOpacity style={GlobalStyles.button} onPress={handleNext}>
+        <Text style={GlobalStyles.buttonText}>Next</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
