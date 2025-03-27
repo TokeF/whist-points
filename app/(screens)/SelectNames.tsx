@@ -10,9 +10,10 @@ import {
 import { Link } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addPlayerName,
-  removePlayerName,
-  setPlayerNames,
+  addPlayer,
+  removePlayer,
+  setPlayers,
+  updatePlayerName,
 } from "../store/gameSlice";
 import GlobalStyles from "../styles/GlobalStyles";
 import { FontAwesome } from "@expo/vector-icons";
@@ -20,45 +21,51 @@ import { RootState } from "../store/store";
 
 const EnterNames = () => {
   const dispatch = useDispatch();
-  const playerNames = useSelector((state: RootState) => state.game.playerNames);
+  const players = useSelector((state: RootState) => state.game.players);
 
   React.useEffect(() => {
-    if (playerNames.length === 0) {
-      dispatch(setPlayerNames(["", "", "", ""]));
+    if (players.length === 0) {
+      dispatch(
+        setPlayers([
+          { name: "", score: 0 },
+          { name: "", score: 0 },
+          { name: "", score: 0 },
+          { name: "", score: 0 },
+        ])
+      );
     }
-  }, [dispatch, playerNames]);
+  }, [dispatch, players]);
 
   const handleNameChange = (index: number, name: string) => {
-    const newNames = [...playerNames];
-    newNames[index] = name;
-    dispatch(setPlayerNames(newNames));
+    dispatch(updatePlayerName({ index, name }));
   };
 
   const handleRemoveName = (index: number) => {
-    dispatch(removePlayerName(index));
+    dispatch(removePlayer(index));
   };
 
   const handleAddName = () => {
-    dispatch(addPlayerName(""));
+    dispatch(addPlayer({ name: "", score: 0 }));
   };
 
   const handleNext = (): void => {
-    const newNames = playerNames.map((x, i) =>
-      x === "" ? `Player ${i + 1}` : x
-    );
-    dispatch(setPlayerNames(newNames));
+    const updatedPlayers = players.map((player, i) => ({
+      ...player,
+      name: player.name === "" ? `Player ${i + 1}` : player.name,
+    }));
+    dispatch(setPlayers(updatedPlayers));
   };
 
   return (
     <SafeAreaView style={GlobalStyles.safeArea}>
       <Text style={{ fontSize: 24, marginBottom: 20 }}>Enter Player Names</Text>
-      {playerNames.map((name, index) => (
+      {players.map((player, index) => (
         <View key={index} style={styles.nameContainer}>
           <View style={styles.removeButton}></View>
           <TextInput
             style={styles.nameInput}
             placeholder={`Player ${index + 1}`}
-            value={name}
+            value={player.name}
             onChangeText={(text) => handleNameChange(index, text)}
           />
           <TouchableOpacity

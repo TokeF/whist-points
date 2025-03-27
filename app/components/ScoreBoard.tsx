@@ -5,14 +5,14 @@ import { View, Text } from "react-native";
 import { RootState } from "../store/store";
 
 const ScoreBoard = () => {
-  const players = useSelector((state: RootState) => state.game.playerNames);
+  const players = useSelector((state: RootState) => state.game.players);
 
   return (
     console.log(players),
     (
       <View style={style.container}>
         {players.map((player, index) => (
-          <Text key={index}>{player}</Text>
+          <Text key={index}>{player.name}</Text>
         ))}
       </View>
     )

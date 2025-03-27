@@ -1,29 +1,36 @@
+import { Player } from "@/models/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface GameState {
-  playerNames: string[];
+  players: Player[];
 }
 
 const initialState: GameState = {
-  playerNames: [],
+  players: [],
 };
 
 const gameSlice = createSlice({
   name: "game",
   initialState,
   reducers: {
-    setPlayerNames(state, action: PayloadAction<string[]>) {
-      state.playerNames = action.payload;
+    setPlayers(state, action: PayloadAction<Player[]>) {
+      state.players = action.payload;
     },
-    addPlayerName(state, action: PayloadAction<string>) {
-      state.playerNames.push(action.payload);
+    addPlayer(state, action: PayloadAction<Player>) {
+      state.players.push(action.payload);
     },
-    removePlayerName(state, action: PayloadAction<number>) {
-      state.playerNames.splice(action.payload, 1);
+    removePlayer(state, action: PayloadAction<number>) {
+      state.players.splice(action.payload, 1);
+    },
+    updatePlayerName(
+      state,
+      action: PayloadAction<{ index: number; name: string }>
+    ) {
+      state.players[action.payload.index].name = action.payload.name;
     },
   },
 });
 
-export const { setPlayerNames, addPlayerName, removePlayerName } =
+export const { setPlayers, addPlayer, removePlayer, updatePlayerName } =
   gameSlice.actions;
 export default gameSlice.reducer;
