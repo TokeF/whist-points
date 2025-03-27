@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text } from "react-native";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 import { Chip } from "react-native-paper";
-import { updatePlayerScore } from "../store/gameSlice"; // Import the action
+import StrategyFactory from "@/services/StrategyFactory";
+import IPointStrategy from "@/services/IPointStrategy";
+import { setPlayers } from "@/store/gameSlice";
 
 const ScoreBoard = () => {
+  const scoreStrategy: IPointStrategy = StrategyFactory.getStrategy(
+    useSelector((state: RootState) => state.game.strategy)
+  );
   const players = useSelector((state: RootState) => state.game.players);
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
   const dispatch = useDispatch();
@@ -20,14 +25,14 @@ const ScoreBoard = () => {
 
   const addPoints = () => {
     if (selectedPlayers.length >= 1) {
-      let score = 1;
-      if (selectedPlayers.length === 1) {
-        score = 2;
-      }
-      selectedPlayers.forEach((playerName) => {
-        dispatch(updatePlayerScore({ name: playerName, points: score }));
-        setSelectedPlayers([]);
-      });
+      const updatedPlayers = scoreStrategy.calculatePoints(
+        players,
+        selectedPlayers
+      );
+      dispatch(setPlayers(updatedPlayers));
+
+      // Uncheck all chips
+      setSelectedPlayers([]);
     }
   };
 

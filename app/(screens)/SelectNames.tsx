@@ -14,10 +14,10 @@ import {
   removePlayer,
   setPlayers,
   updatePlayerName,
-} from "../store/gameSlice";
+} from "../../store/gameSlice";
 import GlobalStyles from "../styles/GlobalStyles";
 import { FontAwesome } from "@expo/vector-icons";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 
 const EnterNames = () => {
   const dispatch = useDispatch();

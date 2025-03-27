@@ -3,10 +3,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface GameState {
   players: Player[];
+  strategy: string;
 }
 
 const initialState: GameState = {
   players: [],
+  strategy: "",
 };
 
 const gameSlice = createSlice({
@@ -28,14 +30,8 @@ const gameSlice = createSlice({
     ) {
       state.players[action.payload.index].name = action.payload.name;
     },
-    updatePlayerScore: (
-      state,
-      action: PayloadAction<{ name: string; points: number }>
-    ) => {
-      const player = state.players.find((p) => p.name === action.payload.name);
-      if (player) {
-        player.score += action.payload.points;
-      }
+    setStrategy(state, action: PayloadAction<string>) {
+      state.strategy = action.payload;
     },
   },
 });
@@ -45,6 +41,6 @@ export const {
   addPlayer,
   removePlayer,
   updatePlayerName,
-  updatePlayerScore,
+  setStrategy,
 } = gameSlice.actions;
 export default gameSlice.reducer;

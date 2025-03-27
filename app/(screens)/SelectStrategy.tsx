@@ -6,15 +6,22 @@ import {
   View,
   StyleSheet,
 } from "react-native";
-import { useLocalSearchParams, Link } from "expo-router";
+import { Link } from "expo-router";
 import GlobalStyles from "../styles/GlobalStyles";
 import { Picker } from "@react-native-picker/picker";
 import { strategies } from "@/services/IPointStrategy";
+import { useDispatch } from "react-redux";
+import { setStrategy } from "../../store/gameSlice";
 
 const SelectStrategy = () => {
   const [selectedStrategy, setSelectedStrategy] = useState<string>(
     strategies[0].key
   );
+  const dispatch = useDispatch();
+
+  const handleStartGame = () => {
+    dispatch(setStrategy(selectedStrategy));
+  };
 
   return (
     <SafeAreaView style={GlobalStyles.safeArea}>
@@ -39,7 +46,10 @@ const SelectStrategy = () => {
           }}
           asChild
         >
-          <TouchableOpacity style={GlobalStyles.button}>
+          <TouchableOpacity
+            style={GlobalStyles.button}
+            onPress={handleStartGame}
+          >
             <Text style={GlobalStyles.buttonText}>Start Game</Text>
           </TouchableOpacity>
         </Link>

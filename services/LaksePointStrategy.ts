@@ -1,7 +1,11 @@
+import { Player } from "@/models/types";
 import IPointStrategy from "./IPointStrategy";
 
-export default class LaksePointStrategy implements IPointStrategy {
-  calculatePoints(currentPoints: number): number {
-    return currentPoints + 1;
-  }
-}
+export const LaksePointStrategy: IPointStrategy = {
+  calculatePoints: function (
+    players: Player[],
+    selectedPlayers: string[]
+  ): Player[] {
+    throw new Error("Function not implemented.");
+  },
+};
