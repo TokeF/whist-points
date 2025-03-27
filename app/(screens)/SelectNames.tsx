@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   SafeAreaView,
   Text,
@@ -7,38 +7,39 @@ import {
   View,
   StyleSheet,
 } from "react-native";
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addPlayerName,
+  removePlayerName,
+  setPlayerNames,
+} from "../store/gameSlice";
 import GlobalStyles from "../styles/GlobalStyles";
 import { FontAwesome } from "@expo/vector-icons";
+import { RootState } from "../store/store";
 
 const EnterNames = () => {
-  const router = useRouter();
-  const [playerNames, setPlayerNames] = useState<string[]>(["", "", "", ""]);
+  const dispatch = useDispatch();
+  const playerNames = useSelector((state: RootState) => state.game.playerNames);
+
+  React.useEffect(() => {
+    if (playerNames.length === 0) {
+      dispatch(setPlayerNames(["", "", "", ""]));
+    }
+  }, [dispatch, playerNames]);
 
   const handleNameChange = (index: number, name: string) => {
     const newNames = [...playerNames];
     newNames[index] = name;
-    setPlayerNames(newNames);
+    dispatch(setPlayerNames(newNames));
   };
 
   const handleRemoveName = (index: number) => {
-    const newNames = playerNames.filter((_, i) => i !== index);
-    setPlayerNames(newNames);
+    dispatch(removePlayerName(index));
   };
 
-  const addName = () => {
-    setPlayerNames([...playerNames, ""]);
-  };
-
-  const handleNext = () => {
-    // set default names if empty
-    const newNames = playerNames.map((x, i) =>
-      x === "" ? `Player ${i + 1}` : x
-    );
-    router.push({
-      pathname: "/SelectStrategy",
-      params: { playerNames: newNames },
-    });
+  const AddName = () => {
+    dispatch(addPlayerName(""));
   };
 
   return (
@@ -61,13 +62,20 @@ const EnterNames = () => {
           </TouchableOpacity>
         </View>
       ))}
-      <TouchableOpacity style={styles.addButton} onPress={() => addName()}>
+      <TouchableOpacity style={styles.addButton} onPress={() => AddName()}>
         <FontAwesome name={"plus-square-o"} size={24} color="green" />
       </TouchableOpacity>
 
-      <TouchableOpacity style={GlobalStyles.button} onPress={handleNext}>
-        <Text style={GlobalStyles.buttonText}>Next</Text>
-      </TouchableOpacity>
+      <Link
+        href={{
+          pathname: "/SelectStrategy",
+        }}
+        asChild
+      >
+        <TouchableOpacity style={GlobalStyles.button}>
+          <Text style={GlobalStyles.buttonText}>Next</Text>
+        </TouchableOpacity>
+      </Link>
     </SafeAreaView>
   );
 };

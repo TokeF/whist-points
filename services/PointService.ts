@@ -1,4 +1,4 @@
-import { Player } from "../models/types";
+import { Player } from "../../models/types";
 
 const PointService = {
   addPoint: (score: number) => {

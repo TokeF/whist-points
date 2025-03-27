@@ -3,9 +3,4 @@ export type Player = {
   score: number;
 };
 
-export interface GameState {
-  players: Player[];
-  strategy: string;
-}
-
 export default {};
