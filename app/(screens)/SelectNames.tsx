@@ -38,8 +38,15 @@ const EnterNames = () => {
     dispatch(removePlayerName(index));
   };
 
-  const AddName = () => {
+  const handleAddName = () => {
     dispatch(addPlayerName(""));
+  };
+
+  const handleNext = (): void => {
+    const newNames = playerNames.map((x, i) =>
+      x === "" ? `Player ${i + 1}` : x
+    );
+    dispatch(setPlayerNames(newNames));
   };
 
   return (
@@ -62,7 +69,10 @@ const EnterNames = () => {
           </TouchableOpacity>
         </View>
       ))}
-      <TouchableOpacity style={styles.addButton} onPress={() => AddName()}>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => handleAddName()}
+      >
         <FontAwesome name={"plus-square-o"} size={24} color="green" />
       </TouchableOpacity>
 
@@ -72,7 +82,7 @@ const EnterNames = () => {
         }}
         asChild
       >
-        <TouchableOpacity style={GlobalStyles.button}>
+        <TouchableOpacity style={GlobalStyles.button} onPress={handleNext}>
           <Text style={GlobalStyles.buttonText}>Next</Text>
         </TouchableOpacity>
       </Link>
