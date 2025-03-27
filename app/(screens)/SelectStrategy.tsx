@@ -15,13 +15,15 @@ import { setStrategy } from "../../store/gameSlice";
 
 const SelectStrategy = () => {
   const [selectedStrategy, setSelectedStrategy] = useState<string>(
-    strategies[0].key
+    Object.keys(strategies)[0]
   );
   const dispatch = useDispatch();
 
   const handleStartGame = () => {
     dispatch(setStrategy(selectedStrategy));
   };
+
+  const selectedStrategyDescription = strategies[selectedStrategy]?.description;
 
   return (
     <SafeAreaView style={GlobalStyles.safeArea}>
@@ -32,14 +34,11 @@ const SelectStrategy = () => {
           style={style.picker}
           onValueChange={(itemValue) => setSelectedStrategy(itemValue)}
         >
-          {strategies.map((strategy) => (
-            <Picker.Item
-              label={strategy.shortName}
-              value={strategy.key}
-              key={strategy.key}
-            />
+          {Object.entries(strategies).map(([key, strategy]) => (
+            <Picker.Item label={key} value={key} key={key} />
           ))}
         </Picker>
+        <Text style={style.description}>{selectedStrategyDescription}</Text>
         <Link
           href={{
             pathname: "/GameScreen",
@@ -66,6 +65,11 @@ const style = StyleSheet.create({
   },
   picker: {
     width: 200,
+  },
+  description: {
+    fontSize: 16,
+    marginVertical: 10,
+    textAlign: "center",
   },
 });
 
