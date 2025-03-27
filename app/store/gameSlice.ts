@@ -28,9 +28,23 @@ const gameSlice = createSlice({
     ) {
       state.players[action.payload.index].name = action.payload.name;
     },
+    updatePlayerScore: (
+      state,
+      action: PayloadAction<{ name: string; points: number }>
+    ) => {
+      const player = state.players.find((p) => p.name === action.payload.name);
+      if (player) {
+        player.score += action.payload.points;
+      }
+    },
   },
 });
 
-export const { setPlayers, addPlayer, removePlayer, updatePlayerName } =
-  gameSlice.actions;
+export const {
+  setPlayers,
+  addPlayer,
+  removePlayer,
+  updatePlayerName,
+  updatePlayerScore,
+} = gameSlice.actions;
 export default gameSlice.reducer;

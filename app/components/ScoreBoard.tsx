@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { View, Text } from "react-native";
 import { RootState } from "../store/store";
 import { Chip } from "react-native-paper";
+import { updatePlayerScore } from "../store/gameSlice"; // Import the action
 
 const ScoreBoard = () => {
   const players = useSelector((state: RootState) => state.game.players);
-  const [selectedPlayer1, setSelectedPlayer1] = useState("");
-  const [selectedPlayer2, setSelectedPlayer2] = useState("");
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
+  const dispatch = useDispatch();
+
   const handleToggleChip = async (name: string) => {
     const updatedChips = selectedPlayers.includes(name)
       ? selectedPlayers.filter((chip) => chip !== name)
@@ -17,7 +18,18 @@ const ScoreBoard = () => {
     setSelectedPlayers(updatedChips);
   };
 
-  console.log(selectedPlayer1, selectedPlayer2);
+  const addPoints = () => {
+    if (selectedPlayers.length >= 1) {
+      let score = 1;
+      if (selectedPlayers.length === 1) {
+        score = 2;
+      }
+      selectedPlayers.forEach((playerName) => {
+        dispatch(updatePlayerScore({ name: playerName, points: score }));
+        setSelectedPlayers([]);
+      });
+    }
+  };
 
   return (
     <View>
@@ -38,6 +50,9 @@ const ScoreBoard = () => {
           </View>
         ))}
       </View>
+      <TouchableOpacity onPress={addPoints}>
+        <Text>Add points</Text>
+      </TouchableOpacity>
     </View>
   );
 };
