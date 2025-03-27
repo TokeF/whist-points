@@ -5,13 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const GameScreen = () => {
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <SafeAreaView>
       <ScoreBoard />
     </SafeAreaView>
   );
