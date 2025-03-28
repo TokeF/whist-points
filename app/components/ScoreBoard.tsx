@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, Modal, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text } from "react-native";
 import { RootState } from "../../store/store";
@@ -23,6 +23,10 @@ const ScoreBoard = () => {
   const strategy = strategies[strategyName];
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
   const [bet, setSelectedBet] = useState<string>("");
+  const [betAmount, setSelectedBetAmount] = useState<number>(0);
+  const [trickAmount, setSelectedTrickAmount] = useState<number>(0);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isWarningVisible, setWarningVisible] = useState(false);
 
   const handleToggleChip = async (name: string) => {
     const updatedChips = selectedPlayers.includes(name)
@@ -32,21 +36,31 @@ const ScoreBoard = () => {
   };
 
   const addPoints = () => {
-    if (selectedPlayers.length >= 1) {
-      const updatedPlayers = scoreStrategy.calculatePoints(
-        players,
-        selectedPlayers
-      );
-      dispatch(setPlayers(updatedPlayers));
-
-      // Uncheck all chips
-      setSelectedPlayers([]);
+    if (selectedPlayers.length === 0) {
+      setWarningVisible(true); // Show warning modal
+    } else {
+      setModalVisible(true); // Open the modal for trick amount
     }
+  };
+
+  const confirmTrickAmount = () => {
+    const updatedPlayers = scoreStrategy.calculatePoints(
+      players,
+      selectedPlayers,
+      bet,
+      betAmount,
+      trickAmount
+    );
+    dispatch(setPlayers(updatedPlayers));
+
+    // Reset states
+    setSelectedPlayers([]);
+    setModalVisible(false);
   };
 
   return (
     // scoreboard
-    <View>
+    <View style={styles.container}>
       <View style={styles.container}>
         {players.map((player, index) => (
           <View key={index} style={styles.playerRow}>
@@ -69,7 +83,7 @@ const ScoreBoard = () => {
         {/* Numbers sropdown */}
         <SelectDropdown
           data={TrickAmounts}
-          onSelect={(selectedItem) => setSelectedBet(selectedItem)}
+          onSelect={(selectedItem) => setSelectedBetAmount(selectedItem)}
           renderButton={(selectedItem, isOpened) => {
             return (
               <View style={styles.dropdownButtonStyle}>
@@ -140,17 +154,96 @@ const ScoreBoard = () => {
           dropdownStyle={styles.dropdownMenuStyle}
         />
       </View>
-      <TouchableOpacity style={GlobalStyles.button} onPress={addPoints}>
+      <TouchableOpacity
+        style={[
+          GlobalStyles.button,
+          { width: 100, alignSelf: "center", marginTop: 50 },
+        ]}
+        onPress={addPoints}
+      >
         <Text>Add points</Text>
       </TouchableOpacity>
+
+      {/* Warning Modal */}
+      <Modal
+        visible={isWarningVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setWarningVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.warningContent}>
+            <Text style={styles.warningText}>
+              Please select at least one player.
+            </Text>
+            <TouchableOpacity
+              style={GlobalStyles.button}
+              onPress={() => setWarningVisible(false)}
+            >
+              <Text>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Modal for selecting trick amount */}
+      <Modal
+        visible={isModalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Select Trick Amount</Text>
+            <SelectDropdown
+              data={TrickAmounts}
+              onSelect={(selectedItem) => setSelectedTrickAmount(selectedItem)}
+              renderButton={(selectedItem, isOpened) => {
+                return (
+                  <View style={styles.dropdownModalButtonStyle}>
+                    <Text style={styles.dropdownButtonTxtStyle}>
+                      {selectedItem || "Select your mood"}
+                    </Text>
+                    <FontAwesome
+                      name={isOpened ? "chevron-up" : "chevron-down"}
+                      style={styles.dropdownButtonArrowStyle}
+                    />
+                  </View>
+                );
+              }}
+              renderItem={(item, index, isSelected) => {
+                return (
+                  <View
+                    style={{
+                      ...styles.dropdownItemStyle,
+                      ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                    }}
+                  >
+                    <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                  </View>
+                );
+              }}
+              defaultValueByIndex={0}
+              dropdownStyle={styles.dropdownMenuStyle}
+            />
+            <TouchableOpacity
+              style={GlobalStyles.button}
+              onPress={confirmTrickAmount}
+            >
+              <Text>Confirm</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignContent: "flex-start",
-    flexDirection: "column",
+    alignContent: "center",
+    justifyContent: "center",
     marginBottom: 10,
     padding: 10,
     width: "100%",
@@ -158,12 +251,14 @@ const styles = StyleSheet.create({
   dropdownContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
+    paddingBottom: 10,
   },
   playerRow: {
+    alignContent: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "80%",
+    width: "50%",
     paddingVertical: 5,
   },
   playerName: {
@@ -179,8 +274,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dropdownButtonStyle: {
-    flex: 1,
+    width: 100,
     height: 50,
+    backgroundColor: "#E9ECEF",
+    borderRadius: 12,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 12,
+    padding: 5,
+  },
+  dropdownModalButtonStyle: {
     backgroundColor: "#E9ECEF",
     borderRadius: 12,
     flexDirection: "row",
@@ -219,6 +323,37 @@ const styles = StyleSheet.create({
   dropdownItemIconStyle: {
     fontSize: 28,
     marginRight: 8,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: "80%",
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  warningContent: {
+    width: "80%",
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  warningText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
   },
 });
 

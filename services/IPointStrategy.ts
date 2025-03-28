@@ -31,5 +31,11 @@ export const strategies: Record<string, IStrategy> = {
 };
 
 export default interface IPointStrategy {
-  calculatePoints(players: Player[], selectedPlayers: string[]): Player[];
+  calculatePoints(
+    players: Player[],
+    selectedPlayers: string[],
+    bet: string,
+    betAmount: number,
+    trickAmount: number
+  ): Player[];
 }
