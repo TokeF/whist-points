@@ -37,5 +37,5 @@ export default interface IPointStrategy {
     bet: string,
     betAmount: number,
     trickAmount: number
-  ): Player[];
+  ): [number, Player[]];
 }

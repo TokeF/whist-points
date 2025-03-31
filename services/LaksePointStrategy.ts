@@ -5,7 +5,7 @@ export const LaksePointStrategy: IPointStrategy = {
   calculatePoints: function (
     players: Player[],
     selectedPlayers: string[]
-  ): Player[] {
+  ): [number, Player[]] {
     throw new Error("Function not implemented.");
   },
 };

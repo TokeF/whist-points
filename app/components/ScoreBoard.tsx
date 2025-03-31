@@ -1,23 +1,16 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  Alert,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, Modal, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text } from "react-native";
 import { RootState } from "../../store/store";
-import { Chip, Icon } from "react-native-paper";
+import { Chip } from "react-native-paper";
 import StrategyFactory from "@/services/StrategyFactory";
 import IPointStrategy, { strategies } from "@/services/IPointStrategy";
 import { setPlayers } from "@/store/gameSlice";
 import GlobalStyles from "../styles/GlobalStyles";
 import SelectDropdown from "react-native-select-dropdown";
 import { FontAwesome } from "@expo/vector-icons";
-import { TrickAmounts } from "@/models/types";
+import { HistoryLog, TrickAmounts } from "@/models/types";
 
 const ScoreBoard = () => {
   const dispatch = useDispatch();
@@ -34,7 +27,7 @@ const ScoreBoard = () => {
   const [trickAmount, setSelectedTrickAmount] = useState<number>(0);
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [isWarningVisible, setWarningVisible] = useState<boolean>(false);
-  const [trickHistory, setHistory] = useState<string[]>([]);
+  const [trickHistory, setHistory] = useState<HistoryLog[]>([]);
   console.log(trickHistory);
 
   const handleToggleChip = async (name: string) => {
@@ -53,15 +46,24 @@ const ScoreBoard = () => {
   };
 
   const confirmTrickAmount = () => {
-    const updatedPlayers = scoreStrategy.calculatePoints(
+    const [points, updatedPlayers] = scoreStrategy.calculatePoints(
       players,
       selectedPlayers,
       bet,
       betAmount,
       trickAmount
     );
-    const st = selectedPlayers + bet + betAmount + trickAmount;
-    const newHist = [...trickHistory, st];
+
+    const newLog: HistoryLog = {
+      caller: selectedPlayers[0],
+      partner: selectedPlayers[1] || null,
+      bet,
+      betAmount,
+      trickAmount,
+      points: points,
+    };
+
+    const newHist = [...trickHistory, newLog];
     dispatch(setPlayers(updatedPlayers));
     setHistory(newHist);
 
@@ -191,23 +193,24 @@ const ScoreBoard = () => {
           keyExtractor={(item, index) => index.toString()}
           ListHeaderComponent={
             <View style={styles.historyRow}>
-              <Text style={styles.historyCellHeader}>Players</Text>
+              <Text style={styles.historyCellHeader}>Caller</Text>
+              <Text style={styles.historyCellHeader}>Partner</Text>
               <Text style={styles.historyCellHeader}>Bet</Text>
               <Text style={styles.historyCellHeader}>Bet Amount</Text>
               <Text style={styles.historyCellHeader}>Trick Amount</Text>
+              <Text style={styles.historyCellHeader}>Points</Text>
             </View>
           }
-          renderItem={({ item }) => {
-            const [players, bet, betAmount, trickAmount] = item.split(",");
-            return (
-              <View style={styles.historyRow}>
-                <Text style={styles.historyCell}>{players}</Text>
-                <Text style={styles.historyCell}>{bet}</Text>
-                <Text style={styles.historyCell}>{betAmount}</Text>
-                <Text style={styles.historyCell}>{trickAmount}</Text>
-              </View>
-            );
-          }}
+          renderItem={({ item }) => (
+            <View style={styles.historyRow}>
+              <Text style={styles.historyCell}>{item.caller}</Text>
+              <Text style={styles.historyCell}>{item.partner || "N/A"}</Text>
+              <Text style={styles.historyCell}>{item.bet}</Text>
+              <Text style={styles.historyCell}>{item.betAmount}</Text>
+              <Text style={styles.historyCell}>{item.trickAmount}</Text>
+              <Text style={styles.historyCell}>{item.points}</Text>
+            </View>
+          )}
         />
       </View>
 
