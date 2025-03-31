@@ -78,19 +78,25 @@ const ScoreBoard = () => {
     // scoreboard
     <View style={styles.container}>
       <View style={styles.container}>
+        <View style={styles.gridHeader}>
+          <Text style={[styles.gridHeaderText]}>Player</Text>
+          <Text style={styles.gridHeaderText}>Score</Text>
+        </View>
         {players.map((player, index) => (
-          <View key={index} style={styles.playerRow}>
+          <View key={index} style={styles.gridRow}>
             <Chip
               textStyle={styles.playerName}
-              key={index}
               showSelectedOverlay={true}
               showSelectedCheck={false}
               selected={selectedPlayers.includes(player.name)}
               onPress={() => handleToggleChip(player.name)}
+              style={styles.gridCell}
             >
-              {player.name}
+              <View style={styles.chipContent}>
+                <Text style={styles.playerName}>{player.name}</Text>
+                <Text style={styles.playerScore}>{player.score}</Text>
+              </View>
             </Chip>
-            <Text style={styles.playerScore}>{player.score}</Text>
           </View>
         ))}
       </View>
@@ -311,19 +317,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     paddingBottom: 10,
   },
-  playerRow: {
-    alignContent: "center",
+  chipContent: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "50%",
-    paddingVertical: 5,
+    alignItems: "center",
+    width: "100%",
   },
   playerName: {
+    flex: 1,
     fontSize: 16,
     fontWeight: "bold",
   },
   playerScore: {
+    flex: 1,
     fontSize: 16,
+    color: "#007BFF",
   },
   dropdownMenuStyle: {
     backgroundColor: "#E9ECEF",
@@ -440,6 +448,29 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   historyCell: {
+    flex: 1,
+    textAlign: "center",
+  },
+  gridHeader: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+  gridHeaderText: {
+    flex: 1,
+    fontWeight: "bold",
+    // textAlign: "center",
+    fontSize: 18,
+  },
+  gridRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 5,
+    alignItems: "center",
+  },
+  gridCell: {
     flex: 1,
     textAlign: "center",
   },
