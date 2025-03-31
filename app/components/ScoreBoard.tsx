@@ -180,7 +180,12 @@ const ScoreBoard = () => {
       <TouchableOpacity
         style={[
           GlobalStyles.button,
-          { width: 100, alignSelf: "center", marginTop: 50 },
+          {
+            width: "80%",
+            alignSelf: "center",
+            marginTop: 20,
+            alignItems: "center",
+          },
         ]}
         onPress={addPoints}
       >
@@ -206,7 +211,7 @@ const ScoreBoard = () => {
           renderItem={({ item }) => (
             <View style={styles.historyRow}>
               <Text style={styles.historyCell}>{item.caller}</Text>
-              <Text style={styles.historyCell}>{item.partner || "N/A"}</Text>
+              <Text style={styles.historyCell}>{item.partner || "-"}</Text>
               <Text style={styles.historyCell}>{item.bet}</Text>
               <Text style={styles.historyCell}>{item.betAmount}</Text>
               <Text style={styles.historyCell}>{item.trickAmount}</Text>
@@ -408,9 +413,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   historyContainer: {
-    marginTop: 20,
+    marginTop: 40,
     width: "100%",
-    maxHeight: 200,
+    maxHeight: 300,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 8,
@@ -421,12 +426,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
-  },
-  historyTable: {
-    flex: 1,
-  },
-  historyContent: {
-    paddingHorizontal: 10,
   },
   historyRow: {
     flexDirection: "row",

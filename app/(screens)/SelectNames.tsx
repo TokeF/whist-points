@@ -45,6 +45,10 @@ const EnterNames = () => {
   };
 
   const handleAddName = () => {
+    if (players.length >= 10) {
+      alert("You can only add up to 10 players.");
+      return;
+    }
     dispatch(addPlayer({ name: "", score: 0 }));
   };
 
