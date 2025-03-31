@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity, Modal, Alert } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  Alert,
+  ScrollView,
+  FlatList,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text } from "react-native";
 import { RootState } from "../../store/store";
@@ -165,9 +172,7 @@ const ScoreBoard = () => {
           />
         </View>
       </View>
-      <View>
-        <Text>{trickHistory.join(" ")}</Text>
-      </View>
+
       <TouchableOpacity
         style={[
           GlobalStyles.button,
@@ -177,6 +182,34 @@ const ScoreBoard = () => {
       >
         <Text>Add points</Text>
       </TouchableOpacity>
+
+      {/* History */}
+      <View style={styles.historyContainer}>
+        <Text style={styles.historyHeader}>Trick History</Text>
+        <FlatList
+          data={trickHistory}
+          keyExtractor={(item, index) => index.toString()}
+          ListHeaderComponent={
+            <View style={styles.historyRow}>
+              <Text style={styles.historyCellHeader}>Players</Text>
+              <Text style={styles.historyCellHeader}>Bet</Text>
+              <Text style={styles.historyCellHeader}>Bet Amount</Text>
+              <Text style={styles.historyCellHeader}>Trick Amount</Text>
+            </View>
+          }
+          renderItem={({ item }) => {
+            const [players, bet, betAmount, trickAmount] = item.split(",");
+            return (
+              <View style={styles.historyRow}>
+                <Text style={styles.historyCell}>{players}</Text>
+                <Text style={styles.historyCell}>{bet}</Text>
+                <Text style={styles.historyCell}>{betAmount}</Text>
+                <Text style={styles.historyCell}>{trickAmount}</Text>
+              </View>
+            );
+          }}
+        />
+      </View>
 
       {/* Warning Modal */}
       <Modal
@@ -367,6 +400,43 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 10,
+    textAlign: "center",
+  },
+  historyContainer: {
+    marginTop: 20,
+    width: "100%",
+    maxHeight: 200,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    backgroundColor: "#f9f9f9",
+  },
+  historyHeader: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 10,
+  },
+  historyTable: {
+    flex: 1,
+  },
+  historyContent: {
+    paddingHorizontal: 10,
+  },
+  historyRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+  historyCellHeader: {
+    flex: 1,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  historyCell: {
+    flex: 1,
     textAlign: "center",
   },
 });
