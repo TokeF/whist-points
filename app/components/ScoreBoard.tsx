@@ -25,8 +25,10 @@ const ScoreBoard = () => {
   const [bet, setSelectedBet] = useState<string>("");
   const [betAmount, setSelectedBetAmount] = useState<number>(0);
   const [trickAmount, setSelectedTrickAmount] = useState<number>(0);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [isWarningVisible, setWarningVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const [isWarningVisible, setWarningVisible] = useState<boolean>(false);
+  const [trickHistory, setHistory] = useState<string[]>([]);
+  console.log(trickHistory);
 
   const handleToggleChip = async (name: string) => {
     const updatedChips = selectedPlayers.includes(name)
@@ -51,7 +53,10 @@ const ScoreBoard = () => {
       betAmount,
       trickAmount
     );
+    const st = selectedPlayers + bet + betAmount + trickAmount;
+    const newHist = [...trickHistory, st];
     dispatch(setPlayers(updatedPlayers));
+    setHistory(newHist);
 
     // Reset states
     setSelectedPlayers([]);
@@ -81,78 +86,87 @@ const ScoreBoard = () => {
 
       <View style={styles.dropdownContainer}>
         {/* Numbers sropdown */}
-        <SelectDropdown
-          data={TrickAmounts}
-          onSelect={(selectedItem) => setSelectedBetAmount(selectedItem)}
-          renderButton={(selectedItem, isOpened) => {
-            return (
-              <View style={styles.dropdownButtonStyle}>
-                {/* {selectedItem && (
+        <View>
+          <Text>Bet Amount</Text>
+          <SelectDropdown
+            data={TrickAmounts}
+            onSelect={(selectedItem) => setSelectedBetAmount(selectedItem)}
+            renderButton={(selectedItem, isOpened) => {
+              return (
+                <View style={styles.dropdownButtonStyle}>
+                  {/* {selectedItem && (
                 <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
               )} */}
-                <Text style={styles.dropdownButtonTxtStyle}>
-                  {selectedItem || "Select your mood"}
-                </Text>
-                <FontAwesome
-                  name={isOpened ? "chevron-up" : "chevron-down"}
-                  style={styles.dropdownButtonArrowStyle}
-                />
-              </View>
-            );
-          }}
-          renderItem={(item, index, isSelected) => {
-            return (
-              <View
-                style={{
-                  ...styles.dropdownItemStyle,
-                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                }}
-              >
-                {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
-                <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-              </View>
-            );
-          }}
-          defaultValueByIndex={0}
-          dropdownStyle={styles.dropdownMenuStyle}
-        />
+                  <Text style={styles.dropdownButtonTxtStyle}>
+                    {selectedItem || "Select your mood"}
+                  </Text>
+                  <FontAwesome
+                    name={isOpened ? "chevron-up" : "chevron-down"}
+                    style={styles.dropdownButtonArrowStyle}
+                  />
+                </View>
+              );
+            }}
+            renderItem={(item, index, isSelected) => {
+              return (
+                <View
+                  style={{
+                    ...styles.dropdownItemStyle,
+                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                  }}
+                >
+                  {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              );
+            }}
+            defaultValueByIndex={0}
+            dropdownStyle={styles.dropdownMenuStyle}
+          />
+        </View>
 
         {/* Bet dropdown */}
-        <SelectDropdown
-          data={strategy.bets}
-          onSelect={(selectedItem) => setSelectedBet(selectedItem)}
-          renderButton={(selectedItem, isOpened) => {
-            return (
-              <View style={styles.dropdownButtonStyle}>
-                {/* {selectedItem && (
+        <View>
+          <Text>Bet Type</Text>
+          <SelectDropdown
+            data={strategy.bets}
+            onSelect={(selectedItem) => setSelectedBet(selectedItem)}
+            renderButton={(selectedItem, isOpened) => {
+              return (
+                <View style={styles.dropdownButtonStyle}>
+                  {/* {selectedItem && (
                 <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
               )} */}
-                <Text style={styles.dropdownButtonTxtStyle}>
-                  {selectedItem || "Select your mood"}
-                </Text>
-                <FontAwesome
-                  name={isOpened ? "chevron-up" : "chevron-down"}
-                  style={styles.dropdownButtonArrowStyle}
-                />
-              </View>
-            );
-          }}
-          renderItem={(item, index, isSelected) => {
-            return (
-              <View
-                style={{
-                  ...styles.dropdownItemStyle,
-                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                }}
-              >
-                {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
-                <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-              </View>
-            );
-          }}
-          defaultValueByIndex={0}
-          dropdownStyle={styles.dropdownMenuStyle}
-        />
+                  <Text style={styles.dropdownButtonTxtStyle}>
+                    {selectedItem || "Select your mood"}
+                  </Text>
+                  <FontAwesome
+                    name={isOpened ? "chevron-up" : "chevron-down"}
+                    style={styles.dropdownButtonArrowStyle}
+                  />
+                </View>
+              );
+            }}
+            renderItem={(item, index, isSelected) => {
+              return (
+                <View
+                  style={{
+                    ...styles.dropdownItemStyle,
+                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                  }}
+                >
+                  {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              );
+            }}
+            defaultValueByIndex={0}
+            dropdownStyle={styles.dropdownMenuStyle}
+          />
+        </View>
+      </View>
+      <View>
+        <Text>{trickHistory.join(" ")}</Text>
       </View>
       <TouchableOpacity
         style={[
@@ -274,7 +288,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dropdownButtonStyle: {
-    width: 100,
+    width: 150,
     height: 50,
     backgroundColor: "#E9ECEF",
     borderRadius: 12,

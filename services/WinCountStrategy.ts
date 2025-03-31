@@ -2,10 +2,16 @@ import IPointStrategy from "./IPointStrategy";
 import { Player } from "@/models/types";
 
 export const WinCountStrategy: IPointStrategy = {
-  calculatePoints(players: Player[], selectedPlayers: string[]): Player[] {
+  calculatePoints(
+    players: Player[],
+    selectedPlayers: string[],
+    bet: string,
+    betAmount: number,
+    trickAmount: number
+  ): Player[] {
     let amount = 1;
-    if (selectedPlayers.length === 1) {
-      amount = 2;
+    if (betAmount > trickAmount) {
+      amount *= -1;
     }
 
     return players.map((player) => {
