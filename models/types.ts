@@ -3,7 +3,11 @@ export type Player = {
   score: number;
 };
 
-export const TrickAmounts: number[] = [7, 8, 9, 10, 11, 12, 13];
+export const TrickAmounts: number[] = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+];
+
+export const BetAmounts: number[] = TrickAmounts.slice(7);
 
 export default {};
 

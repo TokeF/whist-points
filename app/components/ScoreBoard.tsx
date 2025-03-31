@@ -10,7 +10,7 @@ import { setPlayers } from "@/store/gameSlice";
 import GlobalStyles from "../styles/GlobalStyles";
 import SelectDropdown from "react-native-select-dropdown";
 import { FontAwesome } from "@expo/vector-icons";
-import { HistoryLog, TrickAmounts } from "@/models/types";
+import { BetAmounts, HistoryLog, TrickAmounts } from "@/models/types";
 
 const ScoreBoard = () => {
   const dispatch = useDispatch();
@@ -22,9 +22,11 @@ const ScoreBoard = () => {
     StrategyFactory.getStrategy(strategyName);
   const strategy = strategies[strategyName];
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
-  const [bet, setSelectedBet] = useState<string>("");
-  const [betAmount, setSelectedBetAmount] = useState<number>(0);
-  const [trickAmount, setSelectedTrickAmount] = useState<number>(0);
+  const [bet, setSelectedBet] = useState<string>(strategy.bets[0]);
+  const [betAmount, setSelectedBetAmount] = useState<number>(BetAmounts[0]);
+  const [trickAmount, setSelectedTrickAmount] = useState<number>(
+    TrickAmounts[7]
+  );
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [isWarningVisible, setWarningVisible] = useState<boolean>(false);
   const [trickHistory, setHistory] = useState<HistoryLog[]>([]);
@@ -63,7 +65,7 @@ const ScoreBoard = () => {
       points: points,
     };
 
-    const newHist = [...trickHistory, newLog];
+    const newHist = [newLog, ...trickHistory];
     dispatch(setPlayers(updatedPlayers));
     setHistory(newHist);
 
@@ -98,7 +100,7 @@ const ScoreBoard = () => {
         <View>
           <Text>Bet Amount</Text>
           <SelectDropdown
-            data={TrickAmounts}
+            data={BetAmounts}
             onSelect={(selectedItem) => setSelectedBetAmount(selectedItem)}
             renderButton={(selectedItem, isOpened) => {
               return (
@@ -107,7 +109,7 @@ const ScoreBoard = () => {
                 <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
               )} */}
                   <Text style={styles.dropdownButtonTxtStyle}>
-                    {selectedItem || "Select your mood"}
+                    {selectedItem}
                   </Text>
                   <FontAwesome
                     name={isOpened ? "chevron-up" : "chevron-down"}
@@ -147,7 +149,7 @@ const ScoreBoard = () => {
                 <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
               )} */}
                   <Text style={styles.dropdownButtonTxtStyle}>
-                    {selectedItem || "Select your mood"}
+                    {selectedItem}
                   </Text>
                   <FontAwesome
                     name={isOpened ? "chevron-up" : "chevron-down"}
@@ -249,11 +251,12 @@ const ScoreBoard = () => {
             <SelectDropdown
               data={TrickAmounts}
               onSelect={(selectedItem) => setSelectedTrickAmount(selectedItem)}
+              defaultValueByIndex={7}
               renderButton={(selectedItem, isOpened) => {
                 return (
                   <View style={styles.dropdownModalButtonStyle}>
                     <Text style={styles.dropdownButtonTxtStyle}>
-                      {selectedItem || "Select your mood"}
+                      {selectedItem}
                     </Text>
                     <FontAwesome
                       name={isOpened ? "chevron-up" : "chevron-down"}
@@ -274,7 +277,6 @@ const ScoreBoard = () => {
                   </View>
                 );
               }}
-              defaultValueByIndex={0}
               dropdownStyle={styles.dropdownMenuStyle}
             />
             <TouchableOpacity
