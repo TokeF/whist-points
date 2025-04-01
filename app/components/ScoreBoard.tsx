@@ -11,6 +11,7 @@ import GlobalStyles from "../styles/GlobalStyles";
 import SelectDropdown from "react-native-select-dropdown";
 import { FontAwesome } from "@expo/vector-icons";
 import { BetAmounts, HistoryLog, TrickAmounts } from "@/models/types";
+import PlayerGrid from "./PlayerScoreGrid";
 
 const ScoreBoard = () => {
   const dispatch = useDispatch();
@@ -77,33 +78,11 @@ const ScoreBoard = () => {
   return (
     // scoreboard
     <View style={styles.container}>
-      <View style={styles.container}>
-        <View style={styles.gridHeader}>
-          <Text style={styles.gridHeaderText}>Player</Text>
-          <Text style={[styles.gridHeaderText, styles.gridHeaderScore]}>
-            Score
-          </Text>
-        </View>
-        {players.map((player, index) => (
-          <View key={index} style={styles.gridRow}>
-            <Chip
-              textStyle={styles.playerName}
-              showSelectedOverlay={true}
-              showSelectedCheck={false}
-              selected={selectedPlayers.includes(player.name)}
-              onPress={() => handleToggleChip(player.name)}
-              style={styles.gridCell}
-            >
-              <View style={styles.chipContent}>
-                <Text style={styles.playerName}>{player.name}</Text>
-                <Text style={[styles.playerScore, styles.gridCellScore]}>
-                  {player.score}
-                </Text>
-              </View>
-            </Chip>
-          </View>
-        ))}
-      </View>
+      <PlayerGrid
+        players={players}
+        selectedPlayers={selectedPlayers}
+        handleToggleChip={handleToggleChip}
+      />
 
       <View style={styles.dropdownContainer}>
         {/* Numbers sropdown */}
@@ -342,21 +321,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     paddingBottom: 10,
   },
-  chipContent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-  },
-  playerName: {
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "left",
-  },
-  playerScore: {
-    fontSize: 16,
-    color: "#007BFF",
-  },
   dropdownMenuStyle: {
     backgroundColor: "#E9ECEF",
     borderRadius: 8,
@@ -474,38 +438,6 @@ const styles = StyleSheet.create({
   historyCell: {
     flex: 1,
     textAlign: "center",
-  },
-  gridHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-  },
-  gridHeaderText: {
-    flex: 1,
-    fontWeight: "bold",
-    textAlign: "left",
-    fontSize: 18,
-    paddingLeft: 15,
-  },
-  gridHeaderScore: {
-    textAlign: "right",
-    paddingRight: 20,
-  },
-  gridRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 5,
-    alignItems: "center",
-  },
-  gridCell: {
-    flex: 1,
-    textAlign: "left",
-  },
-  gridCellScore: {
-    textAlign: "right",
-    paddingRight: 20,
   },
 });
 
