@@ -43,9 +43,9 @@ const ScoreBoard = () => {
 
   const addPoints = () => {
     if (selectedPlayers.length === 0) {
-      setWarningVisible(true); // Show warning modal
+      alert("Select at least 1 player");
     } else {
-      setModalVisible(true); // Open the modal for trick amount
+      setModalVisible(true);
     }
   };
 
@@ -134,28 +134,6 @@ const ScoreBoard = () => {
           )}
         />
       </View>
-
-      {/* Warning Modal */}
-      <Modal
-        visible={isWarningVisible}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setWarningVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.warningContent}>
-            <Text style={styles.warningText}>
-              Please select at least one player.
-            </Text>
-            <TouchableOpacity
-              style={GlobalStyles.button}
-              onPress={() => setWarningVisible(false)}
-            >
-              <Text>OK</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
 
       {/* Modal for selecting trick amount */}
       <Modal
