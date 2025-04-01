@@ -12,6 +12,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { FontAwesome } from "@expo/vector-icons";
 import { BetAmounts, HistoryLog, TrickAmounts } from "@/models/types";
 import PlayerGrid from "./PlayerScoreGrid";
+import BetDropdowns from "./BetDropdows";
 
 const ScoreBoard = () => {
   const dispatch = useDispatch();
@@ -84,89 +85,11 @@ const ScoreBoard = () => {
         handleToggleChip={handleToggleChip}
       />
 
-      <View style={styles.dropdownContainer}>
-        {/* Numbers sropdown */}
-        <View>
-          <Text>Bet Amount</Text>
-          <SelectDropdown
-            data={BetAmounts}
-            onSelect={(selectedItem) => setSelectedBetAmount(selectedItem)}
-            renderButton={(selectedItem, isOpened) => {
-              return (
-                <View style={styles.dropdownButtonStyle}>
-                  {/* {selectedItem && (
-                <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
-              )} */}
-                  <Text style={styles.dropdownButtonTxtStyle}>
-                    {selectedItem}
-                  </Text>
-                  <FontAwesome
-                    name={isOpened ? "chevron-up" : "chevron-down"}
-                    style={styles.dropdownButtonArrowStyle}
-                  />
-                </View>
-              );
-            }}
-            renderItem={(item, index, isSelected) => {
-              return (
-                <View
-                  style={{
-                    ...styles.dropdownItemStyle,
-                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                  }}
-                >
-                  {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
-                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-                </View>
-              );
-            }}
-            defaultValueByIndex={0}
-            dropdownStyle={styles.dropdownMenuStyle}
-          />
-        </View>
-
-        {/* Bet dropdown */}
-        {strategy.bets.length > 0 && (
-          <View>
-            <Text>Bet Type</Text>
-            <SelectDropdown
-              data={strategy.bets}
-              onSelect={(selectedItem) => setSelectedBet(selectedItem)}
-              renderButton={(selectedItem, isOpened) => {
-                return (
-                  <View style={styles.dropdownButtonStyle}>
-                    {/* {selectedItem && (
-                <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
-              )} */}
-                    <Text style={styles.dropdownButtonTxtStyle}>
-                      {selectedItem}
-                    </Text>
-                    <FontAwesome
-                      name={isOpened ? "chevron-up" : "chevron-down"}
-                      style={styles.dropdownButtonArrowStyle}
-                    />
-                  </View>
-                );
-              }}
-              renderItem={(item, index, isSelected) => {
-                return (
-                  <View
-                    style={{
-                      ...styles.dropdownItemStyle,
-                      ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                    }}
-                  >
-                    {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
-                    <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-                  </View>
-                );
-              }}
-              defaultValueByIndex={0}
-              dropdownStyle={styles.dropdownMenuStyle}
-            />
-          </View>
-        )}
-      </View>
+      <BetDropdowns
+        strategy={strategy}
+        setSelectedBet={setSelectedBet}
+        setSelectedBetAmount={setSelectedBetAmount}
+      ></BetDropdowns>
 
       <TouchableOpacity
         style={[
