@@ -18,13 +18,13 @@ export const strategies: Record<string, IStrategy> = {
   simple: {
     key: "simple",
     shortName: "Trick Count",
-    bets: ["sans", "gode"],
+    bets: [],
     description:
       "A straightforward strategy counting the number of tricks won.",
   },
   "win-count": {
     key: "win-count",
-    bets: ["vip", "halve", "sans", "gode", "sol", "ren sol", "bordlægger"],
+    bets: [],
     shortName: "Count Wins",
     description: "A strategy that emphasizes the total number of wins.",
   },

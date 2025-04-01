@@ -147,44 +147,46 @@ const ScoreBoard = () => {
         </View>
 
         {/* Bet dropdown */}
-        <View>
-          <Text>Bet Type</Text>
-          <SelectDropdown
-            data={strategy.bets}
-            onSelect={(selectedItem) => setSelectedBet(selectedItem)}
-            renderButton={(selectedItem, isOpened) => {
-              return (
-                <View style={styles.dropdownButtonStyle}>
-                  {/* {selectedItem && (
+        {strategy.bets.length > 0 && (
+          <View>
+            <Text>Bet Type</Text>
+            <SelectDropdown
+              data={strategy.bets}
+              onSelect={(selectedItem) => setSelectedBet(selectedItem)}
+              renderButton={(selectedItem, isOpened) => {
+                return (
+                  <View style={styles.dropdownButtonStyle}>
+                    {/* {selectedItem && (
                 <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
               )} */}
-                  <Text style={styles.dropdownButtonTxtStyle}>
-                    {selectedItem}
-                  </Text>
-                  <FontAwesome
-                    name={isOpened ? "chevron-up" : "chevron-down"}
-                    style={styles.dropdownButtonArrowStyle}
-                  />
-                </View>
-              );
-            }}
-            renderItem={(item, index, isSelected) => {
-              return (
-                <View
-                  style={{
-                    ...styles.dropdownItemStyle,
-                    ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                  }}
-                >
-                  {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
-                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-                </View>
-              );
-            }}
-            defaultValueByIndex={0}
-            dropdownStyle={styles.dropdownMenuStyle}
-          />
-        </View>
+                    <Text style={styles.dropdownButtonTxtStyle}>
+                      {selectedItem}
+                    </Text>
+                    <FontAwesome
+                      name={isOpened ? "chevron-up" : "chevron-down"}
+                      style={styles.dropdownButtonArrowStyle}
+                    />
+                  </View>
+                );
+              }}
+              renderItem={(item, index, isSelected) => {
+                return (
+                  <View
+                    style={{
+                      ...styles.dropdownItemStyle,
+                      ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                    }}
+                  >
+                    {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
+                    <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                  </View>
+                );
+              }}
+              defaultValueByIndex={0}
+              dropdownStyle={styles.dropdownMenuStyle}
+            />
+          </View>
+        )}
       </View>
 
       <TouchableOpacity
