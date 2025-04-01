@@ -79,8 +79,10 @@ const ScoreBoard = () => {
     <View style={styles.container}>
       <View style={styles.container}>
         <View style={styles.gridHeader}>
-          <Text style={[styles.gridHeaderText]}>Player</Text>
-          <Text style={styles.gridHeaderText}>Score</Text>
+          <Text style={styles.gridHeaderText}>Player</Text>
+          <Text style={[styles.gridHeaderText, styles.gridHeaderScore]}>
+            Score
+          </Text>
         </View>
         {players.map((player, index) => (
           <View key={index} style={styles.gridRow}>
@@ -94,7 +96,9 @@ const ScoreBoard = () => {
             >
               <View style={styles.chipContent}>
                 <Text style={styles.playerName}>{player.name}</Text>
-                <Text style={styles.playerScore}>{player.score}</Text>
+                <Text style={[styles.playerScore, styles.gridCellScore]}>
+                  {player.score}
+                </Text>
               </View>
             </Chip>
           </View>
@@ -324,12 +328,11 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   playerName: {
-    flex: 1,
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: "left",
   },
   playerScore: {
-    flex: 1,
     fontSize: 16,
     color: "#007BFF",
   },
@@ -453,7 +456,7 @@ const styles = StyleSheet.create({
   },
   gridHeader: {
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     paddingVertical: 5,
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
@@ -461,8 +464,13 @@ const styles = StyleSheet.create({
   gridHeaderText: {
     flex: 1,
     fontWeight: "bold",
-    // textAlign: "center",
+    textAlign: "left",
     fontSize: 18,
+    paddingLeft: 15,
+  },
+  gridHeaderScore: {
+    textAlign: "right",
+    paddingRight: 20,
   },
   gridRow: {
     flexDirection: "row",
@@ -472,7 +480,11 @@ const styles = StyleSheet.create({
   },
   gridCell: {
     flex: 1,
-    textAlign: "center",
+    textAlign: "left",
+  },
+  gridCellScore: {
+    textAlign: "right",
+    paddingRight: 20,
   },
 });
 
