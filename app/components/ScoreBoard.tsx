@@ -294,12 +294,25 @@ const ScoreBoard = () => {
               }}
               dropdownStyle={styles.dropdownMenuStyle}
             />
-            <TouchableOpacity
-              style={GlobalStyles.button}
-              onPress={confirmTrickAmount}
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 20,
+              }}
             >
-              <Text>Confirm</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={[GlobalStyles.button, { flex: 1, margin: 10 }]}
+                onPress={confirmTrickAmount}
+              >
+                <Text style={{ textAlign: "center" }}>Confirm</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[GlobalStyles.button, { flex: 1, margin: 10 }]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={{ textAlign: "center" }}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -308,6 +321,12 @@ const ScoreBoard = () => {
 };
 
 const styles = StyleSheet.create({
+  button: {
+    width: "80%",
+    alignSelf: "center",
+    marginTop: 20,
+    alignItems: "center",
+  },
   container: {
     alignContent: "center",
     justifyContent: "center",
