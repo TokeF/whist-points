@@ -17,7 +17,7 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
   setSelectedBetAmount,
 }) => {
   return (
-    <View style={styles.dropdownContainer}>
+    <View style={DropdownStyles.dropdownContainer}>
       {/* Numbers sropdown */}
       <View>
         <Text>Bet Amount</Text>
@@ -26,14 +26,16 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
           onSelect={(selectedItem) => setSelectedBetAmount(selectedItem)}
           renderButton={(selectedItem, isOpened) => {
             return (
-              <View style={styles.dropdownButton}>
+              <View style={DropdownStyles.dropdownButton}>
                 {/* {selectedItem && (
             <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
           )} */}
-                <Text style={styles.dropdownButtonTxt}>{selectedItem}</Text>
+                <Text style={DropdownStyles.dropdownButtonTxt}>
+                  {selectedItem}
+                </Text>
                 <FontAwesome
                   name={isOpened ? "chevron-up" : "chevron-down"}
-                  style={styles.dropdownButtonArrow}
+                  style={DropdownStyles.dropdownButtonArrow}
                 />
               </View>
             );
@@ -42,17 +44,17 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
             return (
               <View
                 style={{
-                  ...styles.dropdownItem,
+                  ...DropdownStyles.dropdownItem,
                   ...(isSelected && { backgroundColor: "#D2D9DF" }),
                 }}
               >
                 {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
-                <Text style={styles.dropdownItemTxt}>{item}</Text>
+                <Text style={DropdownStyles.dropdownItemTxt}>{item}</Text>
               </View>
             );
           }}
           defaultValueByIndex={0}
-          dropdownStyle={styles.dropdownMenu}
+          dropdownStyle={DropdownStyles.dropdownMenu}
         />
       </View>
 
@@ -65,14 +67,16 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
             onSelect={(selectedItem) => setSelectedBet(selectedItem)}
             renderButton={(selectedItem, isOpened) => {
               return (
-                <View style={styles.dropdownButton}>
+                <View style={DropdownStyles.dropdownButton}>
                   {/* {selectedItem && (
             <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
           )} */}
-                  <Text style={styles.dropdownButtonTxt}>{selectedItem}</Text>
+                  <Text style={DropdownStyles.dropdownButtonTxt}>
+                    {selectedItem}
+                  </Text>
                   <FontAwesome
                     name={isOpened ? "chevron-up" : "chevron-down"}
-                    style={styles.dropdownButtonArrow}
+                    style={DropdownStyles.dropdownButtonArrow}
                   />
                 </View>
               );
@@ -81,17 +85,17 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
               return (
                 <View
                   style={{
-                    ...styles.dropdownItem,
+                    ...DropdownStyles.dropdownItem,
                     ...(isSelected && { backgroundColor: "#D2D9DF" }),
                   }}
                 >
                   {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
-                  <Text style={styles.dropdownItemTxt}>{item}</Text>
+                  <Text style={DropdownStyles.dropdownItemTxt}>{item}</Text>
                 </View>
               );
             }}
             defaultValueByIndex={0}
-            dropdownStyle={styles.dropdownMenu}
+            dropdownStyle={DropdownStyles.dropdownMenu}
           />
         </View>
       )}
@@ -99,7 +103,7 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+export const DropdownStyles = StyleSheet.create({
   dropdownContainer: {
     flexDirection: "row",
     alignItems: "center",
