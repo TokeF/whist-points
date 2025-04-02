@@ -13,7 +13,7 @@ export const strategies: Record<string, IStrategy> = {
     shortName: "Lakse Drengene",
     bets: ["vip", "halve", "sans", "gode", "sol", "ren sol", "bordlægger"],
     description:
-      "A strategy focused on maximizing points through specific tricks.",
+      "A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. A strategy focused on maximizing points through specific tricks. ",
   },
   simple: {
     key: "simple",

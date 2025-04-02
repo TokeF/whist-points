@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 import { Link } from "expo-router";
 import GlobalStyles from "../styles/GlobalStyles";
@@ -12,6 +13,7 @@ import { Picker } from "@react-native-picker/picker";
 import { strategies } from "@/services/IPointStrategy";
 import { useDispatch } from "react-redux";
 import { setStrategy } from "../../store/gameSlice";
+import Colors from "../styles/Colors";
 
 const SelectStrategy = () => {
   const [selectedStrategy, setSelectedStrategy] = useState<string>(
@@ -38,7 +40,9 @@ const SelectStrategy = () => {
             <Picker.Item label={key} value={key} key={key} />
           ))}
         </Picker>
-        <Text style={style.description}>{selectedStrategyDescription}</Text>
+        <ScrollView style={style.descriptionContainer}>
+          <Text style={style.description}>{selectedStrategyDescription}</Text>
+        </ScrollView>
         <Link
           href={{
             pathname: "/GameScreen",
@@ -60,16 +64,29 @@ const SelectStrategy = () => {
 const style = StyleSheet.create({
   container: {
     flexDirection: "column",
+    justifyContent: "space-evenly",
     alignItems: "center",
     marginBottom: 10,
+    width: "100%",
   },
   picker: {
-    width: 200,
+    width: 150,
+  },
+  descriptionContainer: {
+    height: 150,
+    width: "80%",
+    marginVertical: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: 8,
+    backgroundColor: Colors.backgroundLight,
   },
   description: {
+    flexGrow: 1,
     fontSize: 16,
-    marginVertical: 10,
     textAlign: "center",
+    width: "100%",
   },
 });
 
