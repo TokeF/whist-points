@@ -24,6 +24,19 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="SelectNames"
+        options={{
+          href: null,
+        }}
+      />
+
+      <Tabs.Screen
+        name="SelectStrategy"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
         name="GameScreen"
         options={{
           title: "Game",
