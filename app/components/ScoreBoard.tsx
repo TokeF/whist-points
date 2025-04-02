@@ -98,7 +98,7 @@ const ScoreBoard = () => {
         ]}
         onPress={addPoints}
       >
-        <Text>Add points</Text>
+        <Text style={GlobalStyles.buttonText}>Add points</Text>
       </TouchableOpacity>
 
       <TrickHistory trickHistory={trickHistory} />

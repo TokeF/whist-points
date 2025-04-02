@@ -9,6 +9,7 @@ const Colors = {
   borderLight: "#ddd",
   overlay: "rgba(0, 0, 0, 0.5)",
   white: "#fff",
+  tabBarActiveTintColor: "#007BFF",
 };
 
 export default Colors;
