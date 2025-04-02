@@ -5,6 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { TrickAmounts } from "@/models/types";
 import GlobalStyles from "../styles/GlobalStyles";
 import { DropdownStyles } from "./BetDropdows";
+import Colors from "../styles/Colors";
 
 const TrickModal = ({
   isVisible,
@@ -48,7 +49,7 @@ const TrickModal = ({
               <View
                 style={{
                   ...DropdownStyles.dropdownItem,
-                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                  ...(isSelected && { backgroundColor: Colors.backgroundDark }),
                 }}
               >
                 <Text style={DropdownStyles.dropdownItemTxt}>{item}</Text>
@@ -81,12 +82,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: Colors.overlay,
   },
   modalContent: {
     width: "80%",
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
     borderRadius: 10,
     alignItems: "center",
   },
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   dropdownModalButtonStyle: {
-    backgroundColor: "#E9ECEF",
+    backgroundColor: Colors.backgroundLight,
     borderRadius: 12,
     flexDirection: "row",
     justifyContent: "center",

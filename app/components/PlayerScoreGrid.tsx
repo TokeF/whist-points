@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet } from "react-native";
 import { Chip } from "react-native-paper";
 import { Player } from "@/models/types";
+import Colors from "../styles/Colors";
 
 interface PlayerGridProps {
   players: Player[];
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 5,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: Colors.borderLight,
   },
   gridHeaderText: {
     flex: 1,
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
   },
   playerScore: {
     fontSize: 16,
-    color: "#007BFF",
+    color: Colors.textSecondary,
   },
 });
 export default PlayerGrid;

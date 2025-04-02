@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import Colors from "./Colors";
 
 const GlobalStyles = StyleSheet.create({
   safeArea: {
@@ -8,12 +9,12 @@ const GlobalStyles = StyleSheet.create({
     padding: 20,
   },
   button: {
-    backgroundColor: "#007BFF",
+    backgroundColor: Colors.buttonPrimary,
     padding: 10,
     borderRadius: 5,
   },
   buttonText: {
-    color: "#FFFFFF",
+    color: Colors.buttonPrimaryText,
     fontSize: 16,
   },
 });

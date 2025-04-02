@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { HistoryLog } from "@/models/types";
+import Colors from "../styles/Colors";
 
 const TrickHistory = ({ trickHistory }: { trickHistory: HistoryLog[] }) => {
   return (
@@ -40,9 +41,9 @@ const styles = StyleSheet.create({
     width: "100%",
     maxHeight: 300,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: Colors.border,
     borderRadius: 8,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: Colors.backgroundLight,
   },
   historyHeader: {
     fontSize: 18,
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 5,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: Colors.borderLight,
   },
   historyCellHeader: {
     flex: 1,
