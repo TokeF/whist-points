@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
@@ -16,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const ScoreBoard = () => {
   const dispatch = useDispatch();
 
+  const gameState = useSelector((state: RootState) => state.game);
   const gameId = useSelector((state: RootState) => state.game.id);
   const startDate = useSelector((state: RootState) => state.game.startDate);
   const strategyName = useSelector((state: RootState) => state.game.strategy);
@@ -50,14 +51,12 @@ const ScoreBoard = () => {
     }
   };
 
+  useEffect(() => {
+    saveGameStateToLocalStorage();
+  }, [players, trickHistory]);
+
   const saveGameStateToLocalStorage = async () => {
     try {
-      const gameState = {
-        players,
-        trickHistory,
-        strategy: strategyName,
-        startDate: startDate,
-      };
       const serializedState = JSON.stringify(gameState);
       await AsyncStorage.setItem(gameId, serializedState);
 
@@ -94,7 +93,6 @@ const ScoreBoard = () => {
     const newHist = [newLog, ...trickHistory];
     dispatch(setPlayers(updatedPlayers));
     dispatch(setTrickHistory(newHist));
-    saveGameStateToLocalStorage();
 
     // Reset states
     setSelectedPlayers([]);

@@ -48,6 +48,9 @@ const gameSlice = createSlice({
     setId(state, action: PayloadAction<string>) {
       state.id = action.payload; // Reducer to set the game name
     },
+    resetGame(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
@@ -60,5 +63,6 @@ export const {
   setTrickHistory,
   setStartDate,
   setId,
+  resetGame,
 } = gameSlice.actions;
 export default gameSlice.reducer;

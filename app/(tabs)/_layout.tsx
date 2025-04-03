@@ -7,7 +7,6 @@ import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIc
 
 export default function TabsLayout() {
   return (
-    // <Provider store={store}>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors.tabBarActiveTintColor,
@@ -59,6 +58,5 @@ export default function TabsLayout() {
         }}
       />
     </Tabs>
-    // </Provider>
   );
 }

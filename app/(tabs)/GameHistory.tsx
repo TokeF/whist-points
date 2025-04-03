@@ -1,12 +1,29 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Colors from "../styles/Colors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import {
+  setPlayers,
+  setTrickHistory,
+  setStartDate,
+  setId,
+  setStrategy,
+} from "../../store/gameSlice";
+import { useRouter } from "expo-router";
 
 const GameHistory = () => {
   const [games, setGames] = useState<{ id: string; startDate: string }[]>([]);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const loadGames = async () => {
     try {
@@ -27,6 +44,24 @@ const GameHistory = () => {
     }
   };
 
+  const handleGamePress = async (gameId: string) => {
+    try {
+      const gameData = await AsyncStorage.getItem(gameId);
+      if (gameData) {
+        const { players, trickHistory, startDate, id, strategy } =
+          JSON.parse(gameData);
+        dispatch(setPlayers(players));
+        dispatch(setTrickHistory(trickHistory));
+        dispatch(setStartDate(startDate));
+        dispatch(setId(id));
+        dispatch(setStrategy(strategy));
+        router.push("/GameScreen");
+      }
+    } catch (error) {
+      console.error("Failed to load selected game state:", error);
+    }
+  };
+
   useFocusEffect(
     useCallback(() => {
       loadGames();
@@ -37,9 +72,13 @@ const GameHistory = () => {
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.container}>
         {games.map((game) => (
-          <View key={game.id} style={styles.gameItem}>
+          <TouchableOpacity
+            key={game.id}
+            style={styles.gameItem}
+            onPress={() => handleGamePress(game.id)}
+          >
             <Text style={styles.gameText}>Game Date: {game.startDate}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </SafeAreaView>
