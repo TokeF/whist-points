@@ -1,14 +1,20 @@
-import { Player } from "@/models/types";
+import { HistoryLog, Player } from "@/models/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface GameState {
   players: Player[];
   strategy: string;
+  trickHistory: HistoryLog[];
+  startDate: string | null;
+  id: string;
 }
 
 const initialState: GameState = {
   players: [],
   strategy: "",
+  trickHistory: [],
+  startDate: null,
+  id: "",
 };
 
 const gameSlice = createSlice({
@@ -33,6 +39,15 @@ const gameSlice = createSlice({
     setStrategy(state, action: PayloadAction<string>) {
       state.strategy = action.payload;
     },
+    setTrickHistory(state, action: PayloadAction<HistoryLog[]>) {
+      state.trickHistory = action.payload;
+    },
+    setStartDate(state, action: PayloadAction<string | null>) {
+      state.startDate = action.payload; // Reducer to set startDate
+    },
+    setId(state, action: PayloadAction<string>) {
+      state.id = action.payload; // Reducer to set the game name
+    },
   },
 });
 
@@ -42,5 +57,8 @@ export const {
   removePlayer,
   updatePlayerName,
   setStrategy,
+  setTrickHistory,
+  setStartDate,
+  setId,
 } = gameSlice.actions;
 export default gameSlice.reducer;

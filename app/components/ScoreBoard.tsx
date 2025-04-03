@@ -4,19 +4,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
 import StrategyFactory from "@/services/StrategyFactory";
 import IPointStrategy, { strategies } from "@/services/IPointStrategy";
-import { setPlayers } from "@/store/gameSlice";
+import { setPlayers, setTrickHistory } from "@/store/gameSlice";
 import GlobalStyles from "../styles/GlobalStyles";
 import { BetAmounts, HistoryLog, TrickAmounts } from "@/models/types";
 import PlayerGrid from "./PlayerScoreGrid";
 import BetDropdowns from "./BetDropdows";
 import TrickHistory from "./TrickHistory";
 import TrickModal from "./TrickModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ScoreBoard = () => {
   const dispatch = useDispatch();
 
+  const gameId = useSelector((state: RootState) => state.game.id);
+  const startDate = useSelector((state: RootState) => state.game.startDate);
   const strategyName = useSelector((state: RootState) => state.game.strategy);
   const players = useSelector((state: RootState) => state.game.players);
+  const trickHistory = useSelector(
+    (state: RootState) => state.game.trickHistory
+  );
 
   const scoreStrategy: IPointStrategy =
     StrategyFactory.getStrategy(strategyName);
@@ -28,7 +34,6 @@ const ScoreBoard = () => {
     TrickAmounts[7]
   );
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
-  const [trickHistory, setHistory] = useState<HistoryLog[]>([]);
 
   const handleToggleChip = async (name: string) => {
     const updatedChips = selectedPlayers.includes(name)
@@ -42,6 +47,21 @@ const ScoreBoard = () => {
       alert("Select at least 1 player");
     } else {
       setModalVisible(true);
+    }
+  };
+
+  const saveGameStateToLocalStorage = () => {
+    try {
+      const gameState = {
+        players,
+        trickHistory,
+        strategy: strategyName,
+        startDate: startDate,
+      };
+      const serializedState = JSON.stringify(gameState);
+      AsyncStorage.setItem(gameId, serializedState);
+    } catch (error) {
+      console.error("Failed to save game state to local storage:", error);
     }
   };
 
@@ -65,7 +85,8 @@ const ScoreBoard = () => {
 
     const newHist = [newLog, ...trickHistory];
     dispatch(setPlayers(updatedPlayers));
-    setHistory(newHist);
+    dispatch(setTrickHistory(newHist));
+    saveGameStateToLocalStorage();
 
     // Reset states
     setSelectedPlayers([]);
@@ -79,13 +100,11 @@ const ScoreBoard = () => {
         selectedPlayers={selectedPlayers}
         handleToggleChip={handleToggleChip}
       />
-
       <BetDropdowns
         strategy={strategy}
         setSelectedBet={setSelectedBet}
         setSelectedBetAmount={setSelectedBetAmount}
       />
-
       <TouchableOpacity
         style={[
           GlobalStyles.button,
@@ -100,9 +119,7 @@ const ScoreBoard = () => {
       >
         <Text style={GlobalStyles.buttonText}>Add points</Text>
       </TouchableOpacity>
-
       <TrickHistory trickHistory={trickHistory} />
-
       <TrickModal
         isVisible={isModalVisible}
         trickAmount={trickAmount}

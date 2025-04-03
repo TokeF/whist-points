@@ -12,8 +12,9 @@ import GlobalStyles from "../styles/GlobalStyles";
 import { Picker } from "@react-native-picker/picker";
 import { strategies } from "@/services/IPointStrategy";
 import { useDispatch } from "react-redux";
-import { setStrategy } from "../../store/gameSlice";
+import { setStrategy, setStartDate, setId } from "../../store/gameSlice";
 import Colors from "../styles/Colors";
+import uuid from "react-native-uuid";
 
 const SelectStrategy = () => {
   const [selectedStrategy, setSelectedStrategy] = useState<string>(
@@ -22,7 +23,10 @@ const SelectStrategy = () => {
   const dispatch = useDispatch();
 
   const handleStartGame = () => {
+    const gameId = uuid.v4();
     dispatch(setStrategy(selectedStrategy));
+    dispatch(setStartDate(new Date().toISOString()));
+    dispatch(setId(gameId));
   };
 
   const selectedStrategyDescription = strategies[selectedStrategy]?.description;
