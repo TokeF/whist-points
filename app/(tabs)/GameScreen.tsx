@@ -7,6 +7,7 @@ import { Alert, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { View, Text, Button } from "react-native";
 import GlobalStyles from "../styles/GlobalStyles";
+import Colors from "../styles/Colors";
 
 const GameScreen = () => {
   const date = useSelector((state: RootState) => state.game.startDate);
@@ -20,7 +21,14 @@ const GameScreen = () => {
             justifyContent: "center",
           }}
         >
-          <Text style={{ fontSize: 18, marginBottom: 20, textAlign: "center" }}>
+          <Text
+            style={{
+              fontSize: 18,
+              marginBottom: 20,
+              textAlign: "center",
+              padding: 20,
+            }}
+          >
             No game in progress. Start a new game by navigating to Home or
             continue a previous game.
           </Text>
@@ -37,7 +45,7 @@ const GameScreen = () => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: Colors.backgroundLight, flex: 1 }}>
       <ScoreBoard />
     </SafeAreaView>
   );

@@ -14,13 +14,7 @@ const index = () => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <SafeAreaView style={GlobalStyles.safeArea}>
       <Text>Welcome to Whist Points Tracker</Text>
       <Link href="/SelectNames" asChild>
         <TouchableOpacity style={GlobalStyles.button} onPress={handleNewGame}>

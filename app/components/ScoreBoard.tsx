@@ -12,6 +12,7 @@ import BetDropdowns from "./BetDropdows";
 import TrickHistory from "./TrickHistory";
 import TrickModal from "./TrickModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Colors from "../styles/Colors";
 
 const ScoreBoard = () => {
   const dispatch = useDispatch();

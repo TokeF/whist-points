@@ -70,7 +70,7 @@ const GameHistory = () => {
   );
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={GlobalStyles.safeArea}>
       <Text
         style={[
           GlobalStyles.titleText,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   gameItem: {
     padding: 15,
     marginBottom: 10,
-    backgroundColor: Colors.backgroundLight,
+    backgroundColor: Colors.backgroundDark,
     borderRadius: 5,
   },
   gameText: {
