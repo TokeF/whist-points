@@ -50,7 +50,7 @@ const ScoreBoard = () => {
     }
   };
 
-  const saveGameStateToLocalStorage = () => {
+  const saveGameStateToLocalStorage = async () => {
     try {
       const gameState = {
         players,
@@ -59,7 +59,15 @@ const ScoreBoard = () => {
         startDate: startDate,
       };
       const serializedState = JSON.stringify(gameState);
-      AsyncStorage.setItem(gameId, serializedState);
+      await AsyncStorage.setItem(gameId, serializedState);
+
+      // Update the master list of game IDs
+      const gameCollection = await AsyncStorage.getItem("gameCollection");
+      const gameIds = gameCollection ? JSON.parse(gameCollection) : [];
+      if (!gameIds.includes(gameId)) {
+        gameIds.push(gameId);
+        await AsyncStorage.setItem("gameCollection", JSON.stringify(gameIds));
+      }
     } catch (error) {
       console.error("Failed to save game state to local storage:", error);
     }
