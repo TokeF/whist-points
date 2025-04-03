@@ -7,7 +7,7 @@ import { Alert, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { View, Text, Button } from "react-native";
 import GlobalStyles from "../styles/GlobalStyles";
-import Colors from "../styles/Colors";
+import theme from "../styles/Theme";
 
 const GameScreen = () => {
   const date = useSelector((state: RootState) => state.game.startDate);
@@ -45,7 +45,9 @@ const GameScreen = () => {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: Colors.backgroundLight, flex: 1 }}>
+    <SafeAreaView
+      style={{ backgroundColor: theme.colors.backgroundLight, flex: 1 }}
+    >
       <ScoreBoard />
     </SafeAreaView>
   );

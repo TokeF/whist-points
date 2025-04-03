@@ -3,7 +3,7 @@ import { IStrategy } from "@/services/IPointStrategy";
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { Text, View, StyleSheet } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
-import Colors from "../styles/Colors";
+import theme from "../styles/Theme";
 
 interface BetDropdownProps {
   strategy: IStrategy;
@@ -46,7 +46,7 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
               <View
                 style={{
                   ...DropdownStyles.dropdownItem,
-                  ...(isSelected && { backgroundColor: Colors.backgroundDark }),
+                  ...(isSelected && { backgroundColor: theme.backgroundDark }),
                 }}
               >
                 {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
@@ -88,7 +88,7 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
                   style={{
                     ...DropdownStyles.dropdownItem,
                     ...(isSelected && {
-                      backgroundColor: Colors.backgroundDark,
+                      backgroundColor: theme.backgroundDark,
                     }),
                   }}
                 >
@@ -114,12 +114,12 @@ export const DropdownStyles = StyleSheet.create({
     paddingBottom: 10,
   },
   dropdownMenu: {
-    backgroundColor: Colors.backgroundLight,
+    backgroundColor: theme.backgroundLight,
     borderRadius: 8,
     flex: 1,
   },
   dropdownButton: {
-    backgroundColor: Colors.backgroundLight,
+    backgroundColor: theme.backgroundLight,
     width: 150,
     height: 50,
     borderRadius: 12,
@@ -133,7 +133,7 @@ export const DropdownStyles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: "500",
-    color: Colors.textPrimary,
+    color: theme.textPrimary,
   },
   dropdownButtonArrow: {
     fontSize: 14,
@@ -154,7 +154,7 @@ export const DropdownStyles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: "500",
-    color: Colors.textPrimary,
+    color: theme.textPrimary,
   },
   dropdownItemIcon: {
     fontSize: 28,

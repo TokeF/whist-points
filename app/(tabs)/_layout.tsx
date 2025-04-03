@@ -2,7 +2,7 @@ import { Tabs } from "expo-router";
 import { Provider } from "react-redux";
 import store from "../../store/store";
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
-import Colors from "../styles/Colors";
+import theme from "../styles/Theme";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -10,10 +10,10 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.tabBarActiveTintColor,
+        tabBarActiveTintColor: theme.colors.tabBarActiveTintColor,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Colors.backgroundLight,
+          backgroundColor: theme.colors.backgroundLight,
         },
       }}
     >

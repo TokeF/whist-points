@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Colors from "../styles/Colors";
+import theme from "../styles/Theme";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   gameItem: {
     padding: 15,
     marginBottom: 10,
-    backgroundColor: Colors.backgroundDark,
+    backgroundColor: theme.colors.backgroundDark,
     borderRadius: 5,
   },
   gameText: {

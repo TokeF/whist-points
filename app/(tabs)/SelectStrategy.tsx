@@ -13,7 +13,7 @@ import { Picker } from "@react-native-picker/picker";
 import { strategies } from "@/services/IPointStrategy";
 import { useDispatch } from "react-redux";
 import { setStrategy, setStartDate, setId } from "../../store/gameSlice";
-import Colors from "../styles/Colors";
+import theme from "../styles/Theme";
 import uuid from "react-native-uuid";
 
 const SelectStrategy = () => {
@@ -82,9 +82,9 @@ const style = StyleSheet.create({
     marginVertical: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: theme.colors.border,
     borderRadius: 8,
-    backgroundColor: Colors.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
   },
   description: {
     flexGrow: 1,
