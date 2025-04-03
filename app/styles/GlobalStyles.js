@@ -9,9 +9,10 @@ const GlobalStyles = StyleSheet.create({
     backgroundColor: Colors.backgroundLight,
   },
   button: {
-    backgroundColor: Colors.buttonPrimary,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: Colors.buttonPrimaryText,
   },
   buttonText: {
     color: Colors.buttonPrimaryText,

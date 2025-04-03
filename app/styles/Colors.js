@@ -4,7 +4,7 @@ const Colors = {
   textPrimary: "#151E26",
   textSecondary: "#007BFF",
   buttonPrimary: "#007BFF",
-  buttonPrimaryText: "#ffffff",
+  buttonPrimaryText: "#829a93",
   border: "#ccc",
   borderLight: "#ddd",
   overlay: "rgba(0, 0, 0, 0.5)",

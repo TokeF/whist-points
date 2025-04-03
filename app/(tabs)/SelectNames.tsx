@@ -63,28 +63,31 @@ const EnterNames = () => {
   return (
     <SafeAreaView style={GlobalStyles.safeArea}>
       <Text style={GlobalStyles.titleText}>Enter Player Names</Text>
-      {players.map((player, index) => (
-        <View key={index} style={styles.nameContainer}>
-          <View style={styles.removeButton}></View>
-          <TextInput
-            style={styles.nameInput}
-            placeholder={`Player ${index + 1}`}
-            value={player.name}
-            onChangeText={(text) => handleNameChange(index, text)}
-          />
-          <TouchableOpacity
-            style={styles.removeButton}
-            onPress={() => handleRemoveName(index)}
-          >
-            <Text style={{ color: "red" }}>-</Text>
-          </TouchableOpacity>
-        </View>
-      ))}
+      <View style={styles.listContainer}>
+        {players.map((player, index) => (
+          <View key={index} style={styles.nameContainer}>
+            {/* probably wrong way to space venly */}
+            <View style={styles.removeButton}></View>
+            <TextInput
+              style={styles.nameInput}
+              placeholder={`Player ${index + 1}`}
+              value={player.name}
+              onChangeText={(text) => handleNameChange(index, text)}
+            />
+            <TouchableOpacity
+              style={styles.removeButton}
+              onPress={() => handleRemoveName(index)}
+            >
+              <FontAwesome name={"minus"} size={12} color="#E76F51" />
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View>
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => handleAddName()}
       >
-        <FontAwesome name={"plus-square-o"} size={24} color="green" />
+        <FontAwesome name={"plus-square-o"} size={24} color="#2a9d8f" />
       </TouchableOpacity>
 
       <Link
@@ -102,6 +105,11 @@ const EnterNames = () => {
 };
 
 const styles = StyleSheet.create({
+  listContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "80%",
+  },
   nameContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -110,6 +118,7 @@ const styles = StyleSheet.create({
   nameInput: {
     padding: 5,
     flex: 2,
+    fontSize: 16,
   },
   removeButton: {
     flex: 1,
@@ -118,6 +127,7 @@ const styles = StyleSheet.create({
   addButton: {
     padding: 10,
     alignItems: "center",
+    marginBottom: 40,
   },
 });
 
