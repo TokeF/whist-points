@@ -49,6 +49,15 @@ export default function TabsLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="GameHistory"
+        options={{
+          title: "Game History",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="history" color={color} />
+          ),
+        }}
+      />
     </Tabs>
     // </Provider>
   );
