@@ -34,7 +34,7 @@ const SelectStrategy = () => {
   return (
     <SafeAreaView style={GlobalStyles.safeArea}>
       <View style={style.container}>
-        <Text style={{ fontSize: 24 }}>Select Strategy</Text>
+        <Text style={GlobalStyles.titleText}>Select Strategy</Text>
         <Picker
           selectedValue={selectedStrategy}
           style={style.picker}

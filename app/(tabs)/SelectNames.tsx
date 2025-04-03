@@ -62,7 +62,7 @@ const EnterNames = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.safeArea}>
-      <Text style={{ fontSize: 24, marginBottom: 20 }}>Enter Player Names</Text>
+      <Text style={GlobalStyles.titleText}>Enter Player Names</Text>
       {players.map((player, index) => (
         <View key={index} style={styles.nameContainer}>
           <View style={styles.removeButton}></View>

@@ -17,6 +17,11 @@ const GlobalStyles = StyleSheet.create({
     color: Colors.buttonPrimaryText,
     fontSize: 16,
   },
+  titleText: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: "bold",
+  },
 });
 
 export default GlobalStyles;

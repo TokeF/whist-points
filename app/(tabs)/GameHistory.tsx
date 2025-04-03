@@ -19,6 +19,7 @@ import {
   setStrategy,
 } from "../../store/gameSlice";
 import { useRouter } from "expo-router";
+import GlobalStyles from "../styles/GlobalStyles";
 
 const GameHistory = () => {
   const [games, setGames] = useState<{ id: string; startDate: string }[]>([]);
@@ -70,8 +71,16 @@ const GameHistory = () => {
 
   return (
     <SafeAreaView>
+      <Text
+        style={[
+          GlobalStyles.titleText,
+          { textAlign: "center", paddingTop: 20 },
+        ]}
+      >
+        Previous Games
+      </Text>
       <ScrollView contentContainerStyle={styles.container}>
-        {games.map((game) => (
+        {games.reverse().map((game) => (
           <TouchableOpacity
             key={game.id}
             style={styles.gameItem}
