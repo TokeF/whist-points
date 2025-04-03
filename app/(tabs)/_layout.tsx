@@ -4,6 +4,7 @@ import store from "../../store/store";
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import Colors from "../styles/Colors";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function TabsLayout() {
   return (
@@ -18,7 +19,7 @@ export default function TabsLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            <FontAwesome5 size={28} name="home" color={color} />
           ),
         }}
       />
@@ -36,6 +37,15 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="GameHistory"
+        options={{
+          title: "Game History",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 size={28} name="history" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="GameScreen"
         options={{
           title: "Game",
@@ -45,15 +55,6 @@ export default function TabsLayout() {
               name="cards-playing-club-multiple-outline"
               color={color}
             />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="GameHistory"
-        options={{
-          title: "Game History",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="history" color={color} />
           ),
         }}
       />
