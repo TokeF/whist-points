@@ -45,7 +45,9 @@ const SelectStrategy = () => {
           ))}
         </Picker>
         <ScrollView style={style.descriptionContainer}>
-          <Text style={style.description}>{selectedStrategyDescription}</Text>
+          <Text style={[GlobalStyles.centeredText, style.description]}>
+            {selectedStrategyDescription}
+          </Text>
         </ScrollView>
         <Link
           href={{
@@ -70,7 +72,7 @@ const style = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: theme.spacing.medium,
     width: "100%",
   },
   picker: {
@@ -79,16 +81,16 @@ const style = StyleSheet.create({
   descriptionContainer: {
     height: 150,
     width: "80%",
-    marginVertical: 10,
-    padding: 10,
+    marginVertical: theme.spacing.medium,
+    padding: theme.spacing.medium,
     borderWidth: 1,
     borderColor: theme.colors.border,
-    borderRadius: 8,
+    borderRadius: theme.borderRadius.medium,
     backgroundColor: theme.colors.backgroundLight,
   },
   description: {
     flexGrow: 1,
-    fontSize: 16,
+    fontSize: theme.fontSizes.small,
     textAlign: "center",
     width: "100%",
   },

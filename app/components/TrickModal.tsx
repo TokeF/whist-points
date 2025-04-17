@@ -49,7 +49,9 @@ const TrickModal = ({
               <View
                 style={{
                   ...DropdownStyles.dropdownItem,
-                  ...(isSelected && { backgroundColor: theme.backgroundDark }),
+                  ...(isSelected && {
+                    backgroundColor: theme.colors.backgroundDark,
+                  }),
                 }}
               >
                 <Text style={DropdownStyles.dropdownItemTxt}>{item}</Text>
@@ -57,18 +59,26 @@ const TrickModal = ({
             )}
             dropdownStyle={DropdownStyles.dropdownMenu}
           />
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
+          <View
+            style={{ flexDirection: "row", marginTop: theme.spacing.medium }}
+          >
             <TouchableOpacity
-              style={[GlobalStyles.button, { flex: 1, margin: 10 }]}
+              style={[
+                GlobalStyles.button,
+                { flex: 1, margin: theme.spacing.small },
+              ]}
               onPress={onConfirm}
             >
-              <Text style={{ textAlign: "center" }}>Confirm</Text>
+              <Text style={GlobalStyles.buttonText}>Confirm</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[GlobalStyles.button, { flex: 1, margin: 10 }]}
+              style={[
+                GlobalStyles.button,
+                { flex: 1, margin: theme.spacing.small },
+              ]}
               onPress={onCancel}
             >
-              <Text style={{ textAlign: "center" }}>Cancel</Text>
+              <Text style={GlobalStyles.buttonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -82,19 +92,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: theme.overlay,
+    backgroundColor: theme.colors.overlay,
   },
   modalContent: {
     width: "80%",
-    padding: 20,
-    backgroundColor: theme.white,
-    borderRadius: 10,
+    padding: theme.spacing.large,
+    backgroundColor: theme.colors.white,
+    borderRadius: theme.borderRadius.medium,
     alignItems: "center",
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: theme.fontSizes.medium,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: theme.spacing.medium,
+    color: theme.colors.textPrimary,
   },
   warningContent: {
     width: "80%",
@@ -110,13 +121,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   dropdownModalButtonStyle: {
-    backgroundColor: theme.backgroundLight,
-    borderRadius: 12,
+    backgroundColor: theme.colors.backgroundLight,
+    borderRadius: theme.borderRadius.small,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 12,
-    padding: 5,
+    paddingHorizontal: theme.spacing.medium,
+    padding: theme.spacing.small,
   },
 });
 

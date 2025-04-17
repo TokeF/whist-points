@@ -9,19 +9,33 @@ const GlobalStyles = StyleSheet.create({
     backgroundColor: Colors.backgroundLight,
   },
   button: {
-    padding: 10,
-    borderRadius: 15,
+    padding: Colors.spacing.medium,
+    borderRadius: Colors.borderRadius.medium,
     borderWidth: 1,
-    borderColor: Colors.buttonPrimaryText,
+    borderColor: Colors.buttonPrimary,
+    backgroundColor: Colors.buttonPrimary,
   },
   buttonText: {
-    color: Colors.buttonPrimaryText,
-    fontSize: 16,
+    color: Colors.white,
+    fontSize: Colors.fontSizes.medium,
+    textAlign: "center",
+    fontWeight: "bold",
   },
   titleText: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: Colors.fontSizes.title,
+    marginBottom: Colors.spacing.large,
     fontWeight: "bold",
+    color: Colors.textPrimary,
+  },
+  container: {
+    flex: 1,
+    padding: Colors.spacing.medium,
+    backgroundColor: Colors.backgroundLight,
+  },
+  centeredText: {
+    textAlign: "center",
+    fontSize: Colors.fontSizes.medium,
+    color: Colors.textPrimary,
   },
 });
 

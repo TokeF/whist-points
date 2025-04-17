@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { HistoryLog } from "@/models/types";
 import theme from "../styles/Theme";
+import GlobalStyles from "../styles/GlobalStyles";
 
 const TrickHistory = ({ trickHistory }: { trickHistory: HistoryLog[] }) => {
   return (
@@ -37,16 +38,17 @@ const TrickHistory = ({ trickHistory }: { trickHistory: HistoryLog[] }) => {
 
 const styles = StyleSheet.create({
   historyContainer: {
-    marginTop: 40,
+    marginTop: theme.spacing.large,
     width: "100%",
     maxHeight: 300,
     borderWidth: 1,
-    borderColor: theme.border,
-    borderRadius: 8,
-    backgroundColor: theme.backgroundLight,
+    borderColor: theme.colors.border,
+    borderRadius: theme.borderRadius.medium,
+    backgroundColor: theme.colors.backgroundLight,
+    padding: theme.spacing.medium,
   },
   historyHeader: {
-    fontSize: 18,
+    fontSize: theme.fontSizes.medium,
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
@@ -54,18 +56,22 @@ const styles = StyleSheet.create({
   historyRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 5,
+    paddingVertical: theme.spacing.small,
     borderBottomWidth: 1,
-    borderBottomColor: theme.borderLight,
+    borderBottomColor: theme.colors.borderLight,
   },
   historyCellHeader: {
     flex: 1,
     fontWeight: "bold",
     textAlign: "center",
+    fontSize: theme.fontSizes.small,
+    color: theme.colors.textPrimary,
   },
   historyCell: {
     flex: 1,
     textAlign: "center",
+    fontSize: theme.fontSizes.small,
+    color: theme.colors.textPrimary,
   },
 });
 
