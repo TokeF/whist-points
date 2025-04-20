@@ -12,7 +12,6 @@ import BetDropdowns from "./BetDropdows";
 import TrickHistory from "./TrickHistory";
 import TrickModal from "./TrickModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import theme from "../styles/Theme";
 
 const ScoreBoard = () => {
   const dispatch = useDispatch();
@@ -30,7 +29,7 @@ const ScoreBoard = () => {
     StrategyFactory.getStrategy(strategyName);
   const strategy = strategies[strategyName];
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
-  const [bet, setSelectedBet] = useState<string>(strategy.bets[0]);
+  const [bet, setSelectedBet] = useState<string>(Object.keys(strategy.bets)[0]);
   const [betAmount, setSelectedBetAmount] = useState<number>(BetAmounts[0]);
   const [trickAmount, setSelectedTrickAmount] = useState<number>(
     TrickAmounts[7]

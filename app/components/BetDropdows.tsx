@@ -62,11 +62,11 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
       </View>
 
       {/* Bet dropdown */}
-      {strategy.bets.length > 0 && (
+      {Object.keys(strategy.bets).length > 0 && (
         <View>
           <Text>Bet Type</Text>
           <SelectDropdown
-            data={strategy.bets}
+            data={Object.keys(strategy.bets)}
             onSelect={(selectedItem) => setSelectedBet(selectedItem)}
             renderButton={(selectedItem, isOpened) => {
               return (

@@ -1,5 +1,5 @@
 import { Player } from "@/models/types";
-import IPointStrategy from "./IPointStrategy";
+import IPointStrategy, { strategies } from "./IPointStrategy";
 
 const lakseForm = (
   betAmount: number,
@@ -15,8 +15,6 @@ const lakseForm = (
   );
 };
 
-
-
 export const LaksePointStrategy: IPointStrategy = {
   calculatePoints(
     players: Player[],
@@ -25,7 +23,11 @@ export const LaksePointStrategy: IPointStrategy = {
     betAmount: number,
     trickAmount: number
   ): [number, Player[]] {
-    let winnerScore = lakseForm(betAmount, trickAmount, 1);
+    let winnerScore = lakseForm(
+      betAmount,
+      trickAmount,
+      strategies.lakse.bets[bet]
+    );
     let loserScore = winnerScore;
     if (betAmount > trickAmount) {
       winnerScore *= -1;
