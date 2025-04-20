@@ -1,6 +1,22 @@
 import { Player } from "@/models/types";
 import IPointStrategy from "./IPointStrategy";
 
+const lakseForm = (
+  betAmount: number,
+  trickAmount: number,
+  M: number,
+  c: number = 2,
+  h: number = 0.5,
+  b: number = 1.25,
+  N: number = 8
+): number => {
+  return Math.ceil(
+    Math.pow(c, betAmount - 7) * (1 + (trickAmount - betAmount) * h) * b * M * N
+  );
+};
+
+
+
 export const LaksePointStrategy: IPointStrategy = {
   calculatePoints(
     players: Player[],
@@ -9,18 +25,24 @@ export const LaksePointStrategy: IPointStrategy = {
     betAmount: number,
     trickAmount: number
   ): [number, Player[]] {
-    let amount = 1;
+    let winnerScore = lakseForm(betAmount, trickAmount, 1);
+    let loserScore = winnerScore;
     if (betAmount > trickAmount) {
-      amount *= -1;
+      winnerScore *= -1;
+    }
+
+    if (selectedPlayers.length === 1) {
+      winnerScore *= 3;
+      loserScore = Math.ceil(winnerScore / 3);
     }
 
     return [
-      amount,
+      winnerScore,
       players.map((player) => {
         if (selectedPlayers.includes(player.name)) {
-          return { ...player, score: player.score + amount };
+          return { ...player, score: player.score + winnerScore };
         } else {
-          return { ...player, score: player.score - amount };
+          return { ...player, score: player.score - loserScore };
         }
       }),
     ];

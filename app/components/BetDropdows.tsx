@@ -46,7 +46,9 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
               <View
                 style={{
                   ...DropdownStyles.dropdownItem,
-                  ...(isSelected && { backgroundColor: theme.backgroundDark }),
+                  ...(isSelected && {
+                    backgroundColor: theme.colors.backgroundDark,
+                  }),
                 }}
               >
                 {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
@@ -88,7 +90,7 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
                   style={{
                     ...DropdownStyles.dropdownItem,
                     ...(isSelected && {
-                      backgroundColor: theme.backgroundDark,
+                      backgroundColor: theme.colors.backgroundDark,
                     }),
                   }}
                 >
@@ -114,12 +116,12 @@ export const DropdownStyles = StyleSheet.create({
     paddingBottom: 10,
   },
   dropdownMenu: {
-    backgroundColor: theme.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
     borderRadius: 8,
     flex: 1,
   },
   dropdownButton: {
-    backgroundColor: theme.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
     width: 150,
     height: 50,
     borderRadius: 12,
@@ -133,7 +135,7 @@ export const DropdownStyles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: "500",
-    color: theme.textPrimary,
+    color: theme.colors.textPrimary,
   },
   dropdownButtonArrow: {
     fontSize: 14,
@@ -154,7 +156,7 @@ export const DropdownStyles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: "500",
-    color: theme.textPrimary,
+    color: theme.colors.textPrimary,
   },
   dropdownItemIcon: {
     fontSize: 28,
