@@ -17,12 +17,12 @@ const index = () => {
   return (
     <SafeAreaView style={GlobalStyles.safeArea}>
       <Text style={[GlobalStyles.titleText, styles.wildText]}>
-        The Whist Points Tracker
+        The Whist Point Tracker
       </Text>
       <View
         style={{
           flex: 1,
-          justifyContent: "flex-start",
+          justifyContent: "center",
         }}
       >
         <Link href="/SelectNames" asChild>
@@ -37,14 +37,14 @@ const index = () => {
 
 const styles = StyleSheet.create({
   wildText: {
-    paddingTop: theme.spacing.large,
-    letterSpacing: 5,
+    paddingTop: theme.spacing.large * 2,
+    textAlign: "center",
+    fontSize: 50,
     textTransform: "uppercase",
-    fontFamily: "Cochin",
-    color: theme.colors.textSecondary,
-    textShadowColor: theme.colors.textPrimary,
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 25,
+    color: "#222",
+    letterSpacing: 1,
+    fontFamily: "Playfair Display",
+    fontWeight: "400",
   },
 });
 
