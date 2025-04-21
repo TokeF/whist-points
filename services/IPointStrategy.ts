@@ -15,7 +15,7 @@ export const strategies: Record<string, IStrategy> = {
       normal: 1,
       gode: 1.25,
       vip: 1.25,
-      halve: 1.8,
+      halve: 1.75,
       sans: 2,
       sol: 1,
       "ren sol": 1,

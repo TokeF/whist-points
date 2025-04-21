@@ -8,7 +8,7 @@ const lakseForm = (
   c: number = 2,
   h: number = 0.5,
   b: number = 1.25,
-  N: number = 8
+  N: number = 4
 ): number => {
   return Math.ceil(
     Math.pow(c, betAmount - 7) * (1 + (trickAmount - betAmount) * h) * b * M * N
