@@ -11,6 +11,7 @@ import PlayerGrid from "./PlayerScoreGrid";
 import BetDropdowns from "./BetDropdows";
 import TrickHistory from "./TrickHistory";
 import TrickModal from "./TrickModal";
+import HardBetModal from "./HardBetModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ScoreBoard = () => {
@@ -126,13 +127,24 @@ const ScoreBoard = () => {
         <Text style={GlobalStyles.buttonText}>Add points</Text>
       </TouchableOpacity>
       <TrickHistory trickHistory={trickHistory} />
-      <TrickModal
-        isVisible={isModalVisible}
-        trickAmount={trickAmount}
-        setTrickAmount={setSelectedTrickAmount}
-        onConfirm={confirmTrickAmount}
-        onCancel={() => setModalVisible(false)}
-      />
+      {Object.keys(strategy.hardBets).includes(bet) ? (
+        <HardBetModal
+          isVisible={isModalVisible}
+          setTrickAmount={setSelectedTrickAmount}
+          onConfirm={confirmTrickAmount}
+          onCancel={() => setModalVisible(false)}
+          selectedPlayers={selectedPlayers}
+          setSelectedPlayers={setSelectedPlayers}
+        />
+      ) : (
+        <TrickModal
+          isVisible={isModalVisible}
+          trickAmount={trickAmount}
+          setTrickAmount={setSelectedTrickAmount}
+          onConfirm={confirmTrickAmount}
+          onCancel={() => setModalVisible(false)}
+        />
+      )}
     </View>
   );
 };

@@ -4,6 +4,7 @@ import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { Text, View, StyleSheet } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import theme from "../styles/Theme";
+import { useState } from "react";
 
 interface BetDropdownProps {
   strategy: IStrategy;
@@ -17,21 +18,40 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
   setSelectedBet,
   setSelectedBetAmount,
 }) => {
+  const [selectedBet, setLocalBetState] = useState<string | null>(null);
+  const isAmountDisabled =
+    selectedBet !== null && selectedBet in strategy.hardBets;
+
   return (
     <View style={DropdownStyles.dropdownContainer}>
       {/* Numbers sropdown */}
       <View>
         <Text>Bet Amount</Text>
         <SelectDropdown
+          disabled={isAmountDisabled}
           data={BetAmounts}
           onSelect={(selectedItem) => setSelectedBetAmount(selectedItem)}
           renderButton={(selectedItem, isOpened) => {
             return (
-              <View style={DropdownStyles.dropdownButton}>
+              <View
+                style={{
+                  ...DropdownStyles.dropdownButton,
+                  ...(isAmountDisabled && {
+                    backgroundColor: theme.colors.disabled,
+                  }),
+                }}
+              >
                 {/* {selectedItem && (
             <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
           )} */}
-                <Text style={DropdownStyles.dropdownButtonTxt}>
+                <Text
+                  style={{
+                    ...DropdownStyles.dropdownButtonTxt,
+                    ...(isAmountDisabled && {
+                      color: theme.colors.disabledText,
+                    }),
+                  }}
+                >
                   {selectedItem}
                 </Text>
                 <FontAwesome
@@ -67,7 +87,14 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
           <Text>Bet Type</Text>
           <SelectDropdown
             data={Object.keys(strategy.bets)}
-            onSelect={(selectedItem) => setSelectedBet(selectedItem)}
+            onSelect={(selectedItem) => {
+              setSelectedBet(selectedItem);
+              setLocalBetState(selectedItem);
+              // Force bet amount to pre defined value
+              if (isAmountDisabled) {
+                setSelectedBetAmount(strategy.hardBets[selectedItem]);
+              }
+            }}
             renderButton={(selectedItem, isOpened) => {
               return (
                 <View style={DropdownStyles.dropdownButton}>

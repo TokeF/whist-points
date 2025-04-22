@@ -3,7 +3,10 @@ import { Player } from "@/models/types";
 export interface IStrategy {
   key: string;
   shortName: string;
+  // Type of bets that can be made, and their point multiplier
   bets: Record<string, number>;
+  // Bets that have a pre-determined "amount", <name, amount>, amount is used to calculate the score
+  hardBets: Record<string, number>;
   description: string;
 }
 
@@ -21,6 +24,11 @@ export const strategies: Record<string, IStrategy> = {
       "ren sol": 1,
       bordlægger: 1,
     },
+    hardBets: {
+      sol: 9,
+      "ren sol": 10,
+      bordlægger: 12,
+    },
     description:
       "A strategy focused on maximizing points through specific tricks.",
   },
@@ -28,12 +36,14 @@ export const strategies: Record<string, IStrategy> = {
     key: "simple",
     shortName: "Trick Count",
     bets: {},
+    hardBets: {},
     description:
       "A straightforward strategy counting the number of tricks won.",
   },
   "win-count": {
     key: "win-count",
     bets: {},
+    hardBets: {},
     shortName: "Count Wins",
     description: "A strategy that emphasizes the total number of wins.",
   },

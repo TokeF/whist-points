@@ -11,6 +11,8 @@ const theme = {
     overlay: "rgba(0, 0, 0, 0.5)",
     white: "#fff",
     tabBarActiveTintColor: "#007BFF",
+    disabled: "#e1e1e1",
+    disabledText: "#B0B0B0",
   },
   spacing: {
     small: 8,

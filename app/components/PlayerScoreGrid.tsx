@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 5,
     borderBottomWidth: 1,
-    borderBottomColor: theme.borderLight,
+    borderBottomColor: theme.colors.borderLight,
   },
   gridHeaderText: {
     flex: 1,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   playerScore: {
     fontSize: 16,
-    color: theme.textSecondary,
+    color: theme.colors.textSecondary,
   },
 });
 export default PlayerGrid;
