@@ -55,6 +55,7 @@ export default interface IPointStrategy {
     selectedPlayers: string[],
     bet: string,
     betAmount: number,
-    trickAmount: number
+    trickAmount: number,
+    hardBetWinners: string[]
   ): [number, Player[]];
 }

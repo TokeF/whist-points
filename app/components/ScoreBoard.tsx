@@ -30,6 +30,7 @@ const ScoreBoard = () => {
     StrategyFactory.getStrategy(strategyName);
   const strategy = strategies[strategyName];
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
+  const [hardBetWinners, setHardBetWinners] = useState<string[]>([]);
   const [bet, setSelectedBet] = useState<string>(Object.keys(strategy.bets)[0]);
   const [betAmount, setSelectedBetAmount] = useState<number>(BetAmounts[0]);
   const [trickAmount, setSelectedTrickAmount] = useState<number>(
@@ -79,7 +80,8 @@ const ScoreBoard = () => {
       selectedPlayers,
       bet,
       betAmount,
-      trickAmount
+      trickAmount,
+      hardBetWinners
     );
 
     const newLog: HistoryLog = {
@@ -97,6 +99,7 @@ const ScoreBoard = () => {
 
     // Reset states
     setSelectedPlayers([]);
+    setHardBetWinners([]);
     setModalVisible(false);
   };
 
@@ -130,11 +133,10 @@ const ScoreBoard = () => {
       {Object.keys(strategy.hardBets).includes(bet) ? (
         <HardBetModal
           isVisible={isModalVisible}
-          setTrickAmount={setSelectedTrickAmount}
+          setHardBetWinners={setHardBetWinners}
           onConfirm={confirmTrickAmount}
           onCancel={() => setModalVisible(false)}
           selectedPlayers={selectedPlayers}
-          setSelectedPlayers={setSelectedPlayers}
         />
       ) : (
         <TrickModal

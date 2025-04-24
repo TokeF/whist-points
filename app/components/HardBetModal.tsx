@@ -1,26 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
-import SelectDropdown from "react-native-select-dropdown";
 import { FontAwesome } from "@expo/vector-icons";
-import { TrickAmounts } from "@/models/types";
 import GlobalStyles from "../styles/GlobalStyles";
-import { DropdownStyles } from "./BetDropdows";
 import theme from "../styles/Theme";
 
 const HardBetModal = ({
   isVisible,
-  setTrickAmount,
+  setHardBetWinners,
   onConfirm,
   onCancel,
   selectedPlayers,
-  setSelectedPlayers,
 }: {
   isVisible: boolean;
-  setTrickAmount: (amount: number) => void;
+  setHardBetWinners: (winners: string[]) => void;
   onConfirm: () => void;
   onCancel: () => void;
   selectedPlayers: string[];
-  setSelectedPlayers: (players: string[]) => void;
 }) => {
   const [successfulPlayers, setSuccessfulPlayers] = useState<string[]>([]);
 
@@ -38,17 +33,7 @@ const HardBetModal = ({
           ? prev.filter((p) => p !== player) // Remove player if already in the array
           : [...prev, player] // Add player if not in the array
     );
-  };
-
-  const fakeTrickToHandleWinLoose = () => {
-    if (successfulPlayers.length === 0) {
-      console.log("No players selected");
-      setTrickAmount(0);
-    } else {
-      console.log("Selected players:", successfulPlayers);
-      setSelectedPlayers(successfulPlayers);
-      setTrickAmount(13);
-    }
+    setHardBetWinners(selectedPlayers);
   };
 
   return (
@@ -60,7 +45,7 @@ const HardBetModal = ({
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Is the bet successful?</Text>
+          <Text style={styles.modalTitle}>Tap players if successful</Text>
 
           <View style={styles.playersContainer}>
             {selectedPlayers.map((player, index) => (
@@ -91,7 +76,6 @@ const HardBetModal = ({
                 { flex: 1, margin: theme.spacing.small },
               ]}
               onPress={() => {
-                fakeTrickToHandleWinLoose();
                 onConfirm();
               }}
             >

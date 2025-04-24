@@ -26,24 +26,59 @@ export const LaksePointStrategy: IPointStrategy = {
     selectedPlayers: string[],
     bet: string,
     betAmount: number,
-    trickAmount: number
+    trickAmount: number,
+    hardBetWinners: string[] = []
   ): [number, Player[]] {
-    console.log("betAmount", betAmount);
-    console.log("trickAmount", trickAmount);
-    console.log("bettttt", bet);
-    console.log("selectedPlayers", selectedPlayers);
-    console.log("players", players);
-
-    let winnerScore = -1;
-    let loserScore = 0;
-    console.log("bet", bet);
     if (bet in strategies.lakse.hardBets) {
-      winnerScore = lakseForm(
+      console.log("winners", hardBetWinners);
+      let hardbetWonScore = lakseForm(
         strategies.lakse.hardBets[bet],
-        trickAmount,
+        13,
         strategies.lakse.bets[bet]
       );
+      let hardbetLostScore = lakseForm(
+        strategies.lakse.hardBets[bet],
+        0,
+        strategies.lakse.bets[bet]
+      );
+
+      return [
+        hardBetWinners.length > 0 ? hardbetWonScore : hardbetLostScore,
+        players.map((player) => {
+          if (hardBetWinners.length === 0) {
+            if (selectedPlayers.includes(player.name)) {
+              return { ...player, score: player.score + hardbetLostScore };
+            }
+            let zeroSum =
+              -1 *
+              Math.ceil(
+                (hardbetLostScore * selectedPlayers.length) /
+                  (4 - selectedPlayers.length)
+              );
+            console.log("zeroSum", zeroSum);
+            console.log("hardbetLostScore", hardbetLostScore);
+            return { ...player, score: player.score + zeroSum };
+          } else {
+            if (
+              selectedPlayers.includes(player.name) &&
+              hardBetWinners.includes(player.name)
+            ) {
+              return { ...player, score: player.score + hardbetWonScore };
+            }
+            let zeroSum = Math.ceil(
+              (hardbetWonScore * hardBetWinners.length) /
+                (4 - hardBetWinners.length)
+            );
+            console.log("zeroSum", zeroSum);
+            console.log("hardbetWonScore", hardbetWonScore);
+            return { ...player, score: player.score - zeroSum };
+          }
+        }),
+      ];
     } else {
+      let winnerScore = -1;
+      let loserScore = 0;
+
       winnerScore = lakseForm(
         betAmount,
         trickAmount,
@@ -55,21 +90,19 @@ export const LaksePointStrategy: IPointStrategy = {
         winnerScore *= 3;
         loserScore = Math.ceil(winnerScore / 3);
       }
+
+      loserScore = winnerScore;
+
+      return [
+        betAmount > trickAmount ? loserScore : winnerScore,
+        players.map((player) => {
+          if (selectedPlayers.includes(player.name)) {
+            return { ...player, score: player.score + winnerScore };
+          } else {
+            return { ...player, score: player.score - loserScore };
+          }
+        }),
+      ];
     }
-
-    loserScore = winnerScore;
-
-    console.log("win", winnerScore);
-    console.log("lose", loserScore);
-    return [
-      betAmount > trickAmount ? loserScore : winnerScore,
-      players.map((player) => {
-        if (selectedPlayers.includes(player.name)) {
-          return { ...player, score: player.score + winnerScore };
-        } else {
-          return { ...player, score: player.score - loserScore };
-        }
-      }),
-    ];
   },
 };
