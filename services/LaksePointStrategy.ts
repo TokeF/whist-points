@@ -79,7 +79,7 @@ const calculateRegularBet = (
   betAmount: number,
   trickAmount: number
 ): [number, Player[]] => {
-  let winnerScore = -1;
+  let winnerScore = 0;
   let loserScore = 0;
 
   winnerScore = lakseForm(betAmount, trickAmount, strategies.lakse.bets[bet]);
@@ -88,9 +88,9 @@ const calculateRegularBet = (
   if (selectedPlayers.length === 1) {
     winnerScore *= 3;
     loserScore = Math.ceil(winnerScore / 3);
+  } else {
+    loserScore = winnerScore;
   }
-
-  loserScore = winnerScore;
 
   return [
     betAmount > trickAmount ? loserScore : winnerScore,
