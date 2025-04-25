@@ -19,7 +19,6 @@ const ScoreBoard = () => {
 
   const gameState = useSelector((state: RootState) => state.game);
   const gameId = useSelector((state: RootState) => state.game.id);
-  const startDate = useSelector((state: RootState) => state.game.startDate);
   const strategyName = useSelector((state: RootState) => state.game.strategy);
   const players = useSelector((state: RootState) => state.game.players);
   const trickHistory = useSelector(
@@ -84,12 +83,16 @@ const ScoreBoard = () => {
       hardBetWinners
     );
 
+    const isHardBet = Object.keys(strategies[strategyName].hardBets).includes(
+      bet
+    );
+
     const newLog: HistoryLog = {
       caller: selectedPlayers[0],
       partner: selectedPlayers[1] || null,
       bet,
-      betAmount,
-      trickAmount,
+      betAmount: isHardBet ? "-" : betAmount.toString(),
+      trickAmount: isHardBet ? "-" : trickAmount.toString(),
       points: points,
     };
 

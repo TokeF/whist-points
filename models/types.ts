@@ -15,7 +15,7 @@ export type HistoryLog = {
   caller: string;
   partner: string | null;
   bet: string;
-  betAmount: number;
-  trickAmount: number;
+  betAmount: string;
+  trickAmount: string;
   points: number;
 };

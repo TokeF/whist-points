@@ -8,7 +8,6 @@ import { useState } from "react";
 
 interface BetDropdownProps {
   strategy: IStrategy;
-
   setSelectedBet: (bet: string) => void;
   setSelectedBetAmount: (betAmount: number) => void;
 }
@@ -90,10 +89,6 @@ const BetDropdowns: React.FC<BetDropdownProps> = ({
             onSelect={(selectedItem) => {
               setSelectedBet(selectedItem);
               setLocalBetState(selectedItem);
-              // Force bet amount to pre defined value
-              if (isAmountDisabled) {
-                setSelectedBetAmount(strategy.hardBets[selectedItem]);
-              }
             }}
             renderButton={(selectedItem, isOpened) => {
               return (
