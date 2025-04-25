@@ -1,7 +1,7 @@
 import { Player } from "@/models/types";
 import IPointStrategy, { strategies } from "./IPointStrategy";
 
-const lakseForm = (
+const laksePointFunction = (
   betAmount: number,
   trickAmount: number,
   M: number,
@@ -26,12 +26,12 @@ const calculateHardBet = (
   bet: string,
   hardBetWinners: string[]
 ): [number, Player[]] => {
-  let hardbetWonScore = lakseForm(
+  let hardbetWonScore = laksePointFunction(
     strategies.lakse.hardBets[bet],
     13,
     strategies.lakse.bets[bet]
   );
-  let hardbetLostScore = lakseForm(
+  let hardbetLostScore = laksePointFunction(
     strategies.lakse.hardBets[bet],
     0,
     strategies.lakse.bets[bet]
@@ -79,26 +79,29 @@ const calculateRegularBet = (
   betAmount: number,
   trickAmount: number
 ): [number, Player[]] => {
-  let winnerScore = 0;
-  let loserScore = 0;
+  let betterScore = 0;
+  let opponentScore = 0;
 
-  winnerScore = lakseForm(betAmount, trickAmount, strategies.lakse.bets[bet]);
-  console.log("winnerScore", winnerScore);
-  // if selvmakker
+  betterScore = laksePointFunction(
+    betAmount,
+    trickAmount,
+    strategies.lakse.bets[bet]
+  );
+  // if selvmakker multipy by 3, otherwise scores are identical. Sign is handled in calculation
   if (selectedPlayers.length === 1) {
-    winnerScore *= 3;
-    loserScore = Math.ceil(winnerScore / 3);
+    betterScore *= 3;
+    opponentScore = Math.ceil(betterScore / 3);
   } else {
-    loserScore = winnerScore;
+    opponentScore = betterScore;
   }
 
   return [
-    betAmount > trickAmount ? loserScore : winnerScore,
+    betterScore,
     players.map((player) => {
       if (selectedPlayers.includes(player.name)) {
-        return { ...player, score: player.score + winnerScore };
+        return { ...player, score: player.score + betterScore };
       } else {
-        return { ...player, score: player.score - loserScore };
+        return { ...player, score: player.score - opponentScore };
       }
     }),
   ];

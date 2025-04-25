@@ -21,8 +21,8 @@ export const mockStrategies = {
   },
 };
 
-describe("LaksePointStrategy", () => {
-  describe("calculatePoints for Regular Bets Selvmakker", () => {
+describe("LaksePointStrategy calculatePoints regular bets", () => {
+  describe("Selvmakker, Won", () => {
     const selectedPlayers = ["1"];
     const betAmount = 7;
     const trickAmount = 7;
@@ -54,103 +54,245 @@ describe("LaksePointStrategy", () => {
     });
   });
 
-  //     it("should calculate loserScore for multiple selected players", () => {
-  //       const selectedPlayers = ["Alice", "Bob"];
-  //       const bet = "normal";
-  //       const betAmount = 7;
-  //       const trickAmount = 5;
+  describe("Selvmakker, Lost", () => {
+    const selectedPlayers = ["1"];
+    const betAmount = 7;
+    const trickAmount = 6;
 
-  //       const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
-  //         mockPlayers,
-  //         selectedPlayers,
-  //         bet,
-  //         betAmount,
-  //         trickAmount
-  //       );
+    const testCases = [
+      { bet: "normal", expectedScore: -4 * 3 },
+      { bet: "gode", expectedScore: -Math.ceil(4 * 1.25) * 3 },
+      { bet: "vip", expectedScore: -Math.ceil(4 * 1.25) * 3 },
+      { bet: "halve", expectedScore: -Math.ceil(4 * 1.75) * 3 },
+      { bet: "sans", expectedScore: -4 * 2 * 3 },
+    ];
 
-  //       expect(score).toBeLessThan(0); // Loser score
-  //       const alice = updatedPlayers.find((p) => p.name === "Alice");
-  //       const bob = updatedPlayers.find((p) => p.name === "Bob");
-  //       expect(alice?.score).toBeLessThan(10); // Alice's score should decrease
-  //       expect(bob?.score).toBeLessThan(20); // Bob's score should decrease
-  //     });
-  //   });
+    test.each(testCases)("$description", ({ bet, expectedScore }) => {
+      const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
+        mockPlayers,
+        selectedPlayers,
+        bet,
+        betAmount,
+        trickAmount,
+        []
+      );
 
-  //   describe("calculatePoints for Hard Bets", () => {
-  //     it("should assign winnerScore to players in both selectedPlayers and hardBetWinners", () => {
-  //       const selectedPlayers = ["Alice", "Bob"];
-  //       const hardBetWinners = ["Alice"];
-  //       const bet = "sol";
+      expect(score).toBe(expectedScore);
+      const loserScore = -Math.ceil(expectedScore / 3);
+      expect(updatedPlayers[0].score).toBe(expectedScore);
+      expect(updatedPlayers[1].score).toBe(loserScore);
+      expect(updatedPlayers[2].score).toBe(loserScore);
+      expect(updatedPlayers[3].score).toBe(loserScore);
+    });
+  });
 
-  //       const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
-  //         mockPlayers,
-  //         selectedPlayers,
-  //         bet,
-  //         0,
-  //         0,
-  //         hardBetWinners
-  //       );
+  describe("Partner, Won", () => {
+    const selectedPlayers = ["1", "2"];
+    const betAmount = 7;
+    const trickAmount = 7;
 
-  //       const alice = updatedPlayers.find((p) => p.name === "Alice");
-  //       const bob = updatedPlayers.find((p) => p.name === "Bob");
-  //       expect(alice?.score).toBeGreaterThan(10); // Alice's score should increase
-  //       expect(bob?.score).toBeLessThan(20); // Bob's score should decrease
-  //     });
+    const testCases = [
+      { bet: "normal", expectedScore: 5 },
+      { bet: "gode", expectedScore: Math.ceil(5 * 1.25) },
+      { bet: "vip", expectedScore: Math.ceil(5 * 1.25) },
+      { bet: "halve", expectedScore: Math.ceil(5 * 1.75) },
+      { bet: "sans", expectedScore: 5 * 2 },
+    ];
 
-  //     it("should assign loserScore to players in selectedPlayers but not in hardBetWinners", () => {
-  //       const selectedPlayers = ["Alice", "Bob"];
-  //       const hardBetWinners: string[] = [];
-  //       const bet = "sol";
+    test.each(testCases)("$description", ({ bet, expectedScore }) => {
+      const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
+        mockPlayers,
+        selectedPlayers,
+        bet,
+        betAmount,
+        trickAmount,
+        []
+      );
 
-  //       const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
-  //         mockPlayers,
-  //         selectedPlayers,
-  //         bet,
-  //         0,
-  //         0,
-  //         hardBetWinners
-  //       );
+      expect(score).toBe(expectedScore);
+      expect(updatedPlayers[0].score).toBe(expectedScore);
+      expect(updatedPlayers[1].score).toBe(expectedScore);
+      expect(updatedPlayers[2].score).toBe(-expectedScore);
+      expect(updatedPlayers[3].score).toBe(-expectedScore);
+    });
+  });
 
-  //       const alice = updatedPlayers.find((p) => p.name === "Alice");
-  //       const bob = updatedPlayers.find((p) => p.name === "Bob");
-  //       expect(alice?.score).toBeLessThan(10); // Alice's score should decrease
-  //       expect(bob?.score).toBeLessThan(20); // Bob's score should decrease
-  //     });
-  //   });
+  describe("Partner, Lost", () => {
+    const selectedPlayers = ["1", "2"];
+    const betAmount = 7;
+    const trickAmount = 6;
 
-  //   describe("Edge Cases", () => {
-  //     it("should handle empty selectedPlayers", () => {
-  //       const selectedPlayers: string[] = [];
-  //       const bet = "normal";
-  //       const betAmount = 5;
-  //       const trickAmount = 6;
+    const testCases = [
+      { bet: "normal", expectedScore: -4 },
+      { bet: "gode", expectedScore: -Math.ceil(4 * 1.25) },
+      { bet: "vip", expectedScore: -Math.ceil(4 * 1.25) },
+      { bet: "halve", expectedScore: -Math.ceil(4 * 1.75) },
+      { bet: "sans", expectedScore: -4 * 2 },
+    ];
 
-  //       const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
-  //         mockPlayers,
-  //         selectedPlayers,
-  //         bet,
-  //         betAmount,
-  //         trickAmount
-  //       );
+    test.each(testCases)("$description", ({ bet, expectedScore }) => {
+      const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
+        mockPlayers,
+        selectedPlayers,
+        bet,
+        betAmount,
+        trickAmount,
+        []
+      );
 
-  //       expect(score).toBe(0); // No score change
-  //       expect(updatedPlayers).toEqual(mockPlayers); // No changes to players
-  //     });
+      expect(score).toBe(expectedScore);
+      expect(updatedPlayers[0].score).toBe(expectedScore);
+      expect(updatedPlayers[1].score).toBe(expectedScore);
+      expect(updatedPlayers[2].score).toBe(-expectedScore);
+      expect(updatedPlayers[3].score).toBe(-expectedScore);
+    });
+  });
+});
 
-  //     it("should handle invalid bets", () => {
-  //       const selectedPlayers = ["Alice"];
-  //       const bet = "invalid_bet";
-  //       const betAmount = 5;
-  //       const trickAmount = 6;
+describe("LaksePointStrategy calculatePoints hard bets", () => {
+  describe("Single better, Won", () => {
+    const selectedPlayers = ["1"];
+    const betAmount = 7;
+    const trickAmount = 7;
 
-  //       expect(() =>
-  //         LaksePointStrategy.calculatePoints(
-  //           mockPlayers,
-  //           selectedPlayers,
-  //           bet,
-  //           betAmount,
-  //           trickAmount
-  //         )
-  //       ).toThrow(); // Should throw an error for invalid bets
-  //     });
+    const testCases = [
+      { bet: "sol", expectedScore: 60 },
+      { bet: "ren sol", expectedScore: 100 },
+      { bet: "bordlægger", expectedScore: 240 },
+    ];
+
+    test.each(testCases)("$description", ({ bet, expectedScore }) => {
+      const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
+        mockPlayers,
+        selectedPlayers,
+        bet,
+        betAmount,
+        trickAmount,
+        ["1"]
+      );
+
+      expect(score).toBe(expectedScore);
+      expect(updatedPlayers[0].score).toBe(expectedScore);
+      expect(updatedPlayers[1].score).toBe(-Math.ceil(expectedScore / 3));
+      expect(updatedPlayers[2].score).toBe(-Math.ceil(expectedScore / 3));
+      expect(updatedPlayers[3].score).toBe(-Math.ceil(expectedScore / 3));
+    });
+  });
+
+  describe("Single better, Lost", () => {
+    const selectedPlayers = ["1"];
+    const betAmount = 7;
+    const trickAmount = 7;
+
+    const testCases = [
+      { bet: "sol", expectedScore: -80 },
+      { bet: "ren sol", expectedScore: -176 },
+      { bet: "bordlægger", expectedScore: -832 },
+    ];
+
+    test.each(testCases)("$description", ({ bet, expectedScore }) => {
+      const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
+        mockPlayers,
+        selectedPlayers,
+        bet,
+        betAmount,
+        trickAmount,
+        []
+      );
+
+      expect(score).toBe(expectedScore);
+      expect(updatedPlayers[0].score).toBe(expectedScore);
+      expect(updatedPlayers[1].score).toBe(-Math.ceil(expectedScore / 3));
+      expect(updatedPlayers[2].score).toBe(-Math.ceil(expectedScore / 3));
+      expect(updatedPlayers[3].score).toBe(-Math.ceil(expectedScore / 3));
+    });
+  });
+
+  describe("Two betters, Two Winners", () => {
+    const selectedPlayers = ["1", "2"];
+    const betAmount = 7;
+    const trickAmount = 7;
+
+    const testCases = [
+      { bet: "sol", expectedScore: 60 },
+      { bet: "ren sol", expectedScore: 100 },
+      { bet: "bordlægger", expectedScore: 240 },
+    ];
+
+    test.each(testCases)("$description", ({ bet, expectedScore }) => {
+      const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
+        mockPlayers,
+        selectedPlayers,
+        bet,
+        betAmount,
+        trickAmount,
+        ["1", "2"]
+      );
+
+      expect(score).toBe(expectedScore);
+      expect(updatedPlayers[0].score).toBe(expectedScore);
+      expect(updatedPlayers[1].score).toBe(expectedScore);
+      expect(updatedPlayers[2].score).toBe(-expectedScore);
+      expect(updatedPlayers[3].score).toBe(-expectedScore);
+    });
+  });
+
+  describe("Two betters, Two Losers", () => {
+    const selectedPlayers = ["1", "2"];
+    const betAmount = 7;
+    const trickAmount = 7;
+
+    const testCases = [
+      { bet: "sol", expectedScore: -80 },
+      { bet: "ren sol", expectedScore: -176 },
+      { bet: "bordlægger", expectedScore: -832 },
+    ];
+
+    test.each(testCases)("$description", ({ bet, expectedScore }) => {
+      const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
+        mockPlayers,
+        selectedPlayers,
+        bet,
+        betAmount,
+        trickAmount,
+        []
+      );
+
+      expect(score).toBe(expectedScore);
+      expect(updatedPlayers[0].score).toBe(expectedScore);
+      expect(updatedPlayers[1].score).toBe(expectedScore);
+      expect(updatedPlayers[2].score).toBe(-expectedScore);
+      expect(updatedPlayers[3].score).toBe(-expectedScore);
+    });
+  });
+
+  describe("Two betters, Single Winner", () => {
+    const selectedPlayers = ["1", "2"];
+    const betAmount = 7;
+    const trickAmount = 7;
+
+    const testCases = [
+      { bet: "sol", expectedScore: 60 },
+      { bet: "ren sol", expectedScore: 100 },
+      { bet: "bordlægger", expectedScore: 240 },
+    ];
+
+    test.each(testCases)("$description", ({ bet, expectedScore }) => {
+      const [score, updatedPlayers] = LaksePointStrategy.calculatePoints(
+        mockPlayers,
+        selectedPlayers,
+        bet,
+        betAmount,
+        trickAmount,
+        ["2"]
+      );
+
+      expect(score).toBe(expectedScore);
+      const loserScore = -Math.ceil(expectedScore / 3);
+      expect(updatedPlayers[0].score).toBe(loserScore);
+      expect(updatedPlayers[1].score).toBe(expectedScore);
+      expect(updatedPlayers[2].score).toBe(loserScore);
+      expect(updatedPlayers[3].score).toBe(loserScore);
+    });
+  });
 });
