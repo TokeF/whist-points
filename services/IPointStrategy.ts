@@ -15,7 +15,7 @@ export const strategies: Record<string, IStrategy> = {
     key: "lakse",
     shortName: "Lakse Drengene",
     bets: {
-      normal: 1,
+      alm: 1,
       gode: 1.25,
       vip: 1.25,
       halve: 1.75,
@@ -45,7 +45,8 @@ export const strategies: Record<string, IStrategy> = {
     bets: {},
     hardBets: {},
     shortName: "Count Wins",
-    description: "A strategy that emphasizes the total number of wins.",
+    description:
+      "A simple score strategy that emphasizes the total number of wins. A win result in 1 point, a loss in -1 point. Only better and partner can receive points.",
   },
 };
 

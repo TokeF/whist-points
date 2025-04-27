@@ -20,7 +20,7 @@ export const WinCountStrategy: IPointStrategy = {
         if (selectedPlayers.includes(player.name)) {
           return { ...player, score: player.score + amount };
         } else {
-          return { ...player, score: player.score - amount };
+          return { ...player, score: player.score };
         }
       }),
     ];

@@ -11,7 +11,7 @@ export const mockPlayers: Player[] = [
 export const mockStrategies = {
   lakse: {
     bets: {
-      normal: 1,
+      alm: 1,
       gode: 1.25,
     },
     hardBets: {
@@ -28,7 +28,7 @@ describe("LaksePointStrategy calculatePoints regular bets", () => {
     const trickAmount = 7;
 
     const testCases = [
-      { bet: "normal", expectedScore: 5 * 3 },
+      { bet: "alm", expectedScore: 5 * 3 },
       { bet: "gode", expectedScore: Math.ceil(5 * 1.25) * 3 },
       { bet: "vip", expectedScore: Math.ceil(5 * 1.25) * 3 },
       { bet: "halve", expectedScore: Math.ceil(5 * 1.75) * 3 },
@@ -60,7 +60,7 @@ describe("LaksePointStrategy calculatePoints regular bets", () => {
     const trickAmount = 6;
 
     const testCases = [
-      { bet: "normal", expectedScore: -4 * 3 },
+      { bet: "alm", expectedScore: -4 * 3 },
       { bet: "gode", expectedScore: -Math.ceil(4 * 1.25) * 3 },
       { bet: "vip", expectedScore: -Math.ceil(4 * 1.25) * 3 },
       { bet: "halve", expectedScore: -Math.ceil(4 * 1.75) * 3 },
@@ -92,7 +92,7 @@ describe("LaksePointStrategy calculatePoints regular bets", () => {
     const trickAmount = 7;
 
     const testCases = [
-      { bet: "normal", expectedScore: 5 },
+      { bet: "alm", expectedScore: 5 },
       { bet: "gode", expectedScore: Math.ceil(5 * 1.25) },
       { bet: "vip", expectedScore: Math.ceil(5 * 1.25) },
       { bet: "halve", expectedScore: Math.ceil(5 * 1.75) },
@@ -123,7 +123,7 @@ describe("LaksePointStrategy calculatePoints regular bets", () => {
     const trickAmount = 6;
 
     const testCases = [
-      { bet: "normal", expectedScore: -4 },
+      { bet: "alm", expectedScore: -4 },
       { bet: "gode", expectedScore: -Math.ceil(4 * 1.25) },
       { bet: "vip", expectedScore: -Math.ceil(4 * 1.25) },
       { bet: "halve", expectedScore: -Math.ceil(4 * 1.75) },
