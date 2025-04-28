@@ -27,13 +27,16 @@ const HardBetModal = ({
   }, [isVisible]);
 
   const togglePlayerSuccess = (player: string) => {
-    setSuccessfulPlayers(
-      (prev) =>
-        prev.includes(player)
-          ? prev.filter((p) => p !== player) // Remove player if already in the array
-          : [...prev, player] // Add player if not in the array
-    );
-    setHardBetWinners(selectedPlayers);
+    setSuccessfulPlayers((prev) => {
+      const updatedPlayers = prev.includes(player)
+        ? prev.filter((p) => p !== player) // Remove player if already in the array
+        : [...prev, player]; // Add player if not in the array
+
+      // Update hard bet winners with the new state
+      setHardBetWinners(updatedPlayers);
+
+      return updatedPlayers; // Return the updated state
+    });
   };
 
   return (

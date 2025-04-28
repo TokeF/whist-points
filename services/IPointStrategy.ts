@@ -44,6 +44,7 @@ export const strategies: Record<string, IStrategy> = {
       sol: 1,
       "ren sol": 1,
       bordlægger: 1,
+      "ren bordlægger": 1,
     },
     hardBets: {
       sol: 12,
@@ -53,10 +54,25 @@ export const strategies: Record<string, IStrategy> = {
     },
     description: "A simple and classic score strategy.",
   },
-  "win-count": {
+  winCount: {
     key: "win-count",
-    bets: {},
-    hardBets: {},
+    bets: {
+      alm: 1,
+      gode: 1,
+      vip: 1,
+      halve: 1,
+      sans: 1,
+      sol: 1,
+      "ren sol": 1,
+      bordlægger: 1,
+      "ren bordlægger": 1,
+    },
+    hardBets: {
+      sol: 1,
+      "ren sol": 1,
+      bordlægger: 1,
+      "ren bordlægger": 1,
+    },
     shortName: "Count Wins",
     description:
       "A simple score strategy that emphasizes the total number of wins. A win result in 1 point, a loss in -1 point. Only better and partner can receive points.",

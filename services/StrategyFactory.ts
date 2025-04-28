@@ -8,7 +8,7 @@ export default class StrategyFactory {
     switch (strategyName) {
       case "lakse":
         return LaksePointStrategy;
-      case "win-count":
+      case "winCount":
         return WinCountStrategy;
       case "classic":
         return ClassicStrategy;
