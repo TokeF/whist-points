@@ -1,41 +1,41 @@
 import { StyleSheet } from "react-native";
-import Colors from "./Theme";
+import theme from "./Theme";
 
 const GlobalStyles = StyleSheet.create({
   safeArea: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Colors.backgroundLight,
+    backgroundColor: theme.colors.backgroundLight,
   },
   button: {
-    padding: Colors.spacing.medium,
-    borderRadius: Colors.borderRadius.medium,
+    padding: theme.spacing.medium,
+    borderRadius: theme.borderRadius.medium,
     borderWidth: 1,
-    borderColor: Colors.buttonPrimary,
-    backgroundColor: Colors.buttonPrimary,
+    borderColor: theme.colors.buttonPrimary,
+    backgroundColor: theme.colors.buttonPrimary,
   },
   buttonText: {
-    color: Colors.white,
-    fontSize: Colors.fontSizes.medium,
+    color: theme.colors.buttonPrimaryText,
+    fontSize: theme.fontSizes.medium,
     textAlign: "center",
     fontWeight: "bold",
   },
   titleText: {
-    fontSize: Colors.fontSizes.title,
-    marginBottom: Colors.spacing.large,
+    fontSize: theme.fontSizes.title,
+    marginBottom: theme.spacing.large,
     fontWeight: "bold",
-    color: Colors.textPrimary,
+    color: theme.colors.textPrimary,
   },
   container: {
     flex: 1,
-    padding: Colors.spacing.medium,
-    backgroundColor: Colors.backgroundLight,
+    padding: theme.spacing.medium,
+    backgroundColor: theme.colors.backgroundLight,
   },
   centeredText: {
     textAlign: "center",
-    fontSize: Colors.fontSizes.medium,
-    color: Colors.textPrimary,
+    fontSize: theme.fontSizes.medium,
+    color: theme.colors.textPrimary,
   },
 });
 

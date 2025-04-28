@@ -32,6 +32,9 @@ const PlayerGrid: React.FC<PlayerGridProps> = ({
             onPress={() => handleToggleChip(player.name)}
             style={[
               styles.gridCell,
+              selectedPlayers.includes(player.name)
+                ? styles.selectedChip
+                : styles.unselectedChip,
               selectedPlayers[0] === player.name && styles.firstSelectedChip,
             ]}
           >
@@ -102,10 +105,17 @@ const styles = StyleSheet.create({
   },
   playerScore: {
     fontSize: 16,
-    color: theme.colors.textSecondary,
+    fontWeight: "bold",
+    color: theme.colors.scoreText,
   },
   firstSelectedChip: {
-    backgroundColor: "lightgreen",
+    backgroundColor: theme.colors.betterChip,
+  },
+  selectedChip: {
+    backgroundColor: theme.colors.partnerChip,
+  },
+  unselectedChip: {
+    backgroundColor: theme.colors.opponentChip,
   },
 });
 export default PlayerGrid;
