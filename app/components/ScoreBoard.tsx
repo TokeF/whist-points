@@ -14,6 +14,7 @@ import TrickModal from "./TrickModal";
 import HardBetModal from "./HardBetModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import theme from "../styles/Theme";
+import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 
 const ScoreBoard = () => {
   const dispatch = useDispatch();
@@ -186,7 +187,11 @@ const ScoreBoard = () => {
           ]}
           onPress={undoLastAction}
         >
-          <Text style={GlobalStyles.buttonText}>Undo</Text>
+          <FontAwesome
+            size={theme.fontSizes.large}
+            name="undo"
+            color={theme.colors.buttonPrimaryText}
+          />
         </TouchableOpacity>
       </View>
       <TrickHistory trickHistory={trickHistory} />
