@@ -30,7 +30,10 @@ const PlayerGrid: React.FC<PlayerGridProps> = ({
             showSelectedCheck={false}
             selected={selectedPlayers.includes(player.name)}
             onPress={() => handleToggleChip(player.name)}
-            style={styles.gridCell}
+            style={[
+              styles.gridCell,
+              selectedPlayers[0] === player.name && styles.firstSelectedChip,
+            ]}
           >
             <View style={styles.chipContent}>
               <Text style={styles.playerName}>{player.name}</Text>
@@ -100,6 +103,9 @@ const styles = StyleSheet.create({
   playerScore: {
     fontSize: 16,
     color: theme.colors.textSecondary,
+  },
+  firstSelectedChip: {
+    backgroundColor: "lightgreen",
   },
 });
 export default PlayerGrid;
