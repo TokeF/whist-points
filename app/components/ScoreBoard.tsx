@@ -38,10 +38,21 @@ const ScoreBoard = () => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
   const handleToggleChip = async (name: string) => {
-    const updatedChips = selectedPlayers.includes(name)
-      ? selectedPlayers.filter((chip) => chip !== name)
-      : [...selectedPlayers, name];
-    setSelectedPlayers(updatedChips);
+    const isHardBet = Object.keys(strategy.hardBets).includes(bet);
+
+    if (isHardBet) {
+      const updatedChips = selectedPlayers.includes(name)
+        ? selectedPlayers.filter((chip) => chip !== name)
+        : [...selectedPlayers, name];
+      setSelectedPlayers(updatedChips);
+    } else {
+      const updatedChips = selectedPlayers.includes(name)
+        ? selectedPlayers.filter((chip) => chip !== name)
+        : selectedPlayers.length < 2
+        ? [...selectedPlayers, name]
+        : [selectedPlayers[1], name]; // Remove the first player and add the new one
+      setSelectedPlayers(updatedChips);
+    }
   };
 
   const addPoints = () => {
