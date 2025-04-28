@@ -18,4 +18,5 @@ export type HistoryLog = {
   betAmount: string;
   trickAmount: string;
   points: number;
+  players: Player[];
 };

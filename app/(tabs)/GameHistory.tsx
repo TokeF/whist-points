@@ -46,7 +46,6 @@ const GameHistory = () => {
         if (gameData) {
           const { players, trickHistory, startDate, id, strategy } =
             JSON.parse(gameData);
-          console.log("Loaded game data:", gameData);
           loadedGames.push({
             id: gameId,
             date: startDate,
@@ -135,9 +134,6 @@ const GameHistory = () => {
               player.name.slice(0, 2)
             )
             .join(", ");
-          // const playerInitials = "he, to, fe, me";
-          console.log("player obj:", game.players);
-          console.log("Player initials:", playerInitials);
 
           return (
             <TouchableOpacity

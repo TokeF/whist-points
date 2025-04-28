@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { HistoryLog } from "@/models/types";
 import theme from "../styles/Theme";
-import GlobalStyles from "../styles/GlobalStyles";
 
 const TrickHistory = ({ trickHistory }: { trickHistory: HistoryLog[] }) => {
   return (

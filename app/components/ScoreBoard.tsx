@@ -74,16 +74,8 @@ const ScoreBoard = () => {
     const lastLog = trickHistory[0];
     const updatedHistory = trickHistory.slice(1);
 
-    const revertedPlayers = players.map((player) => {
-      const logPoints = lastLog.points;
-      if (
-        lastLog.caller === player.name ||
-        (lastLog.partner && lastLog.partner === player.name)
-      ) {
-        return { ...player, score: player.score - logPoints };
-      }
-      return { ...player, score: player.score + logPoints };
-    });
+    const revertedPlayers = lastLog.players;
+    console.log("Reverted players:", revertedPlayers);
 
     dispatch(setPlayers(revertedPlayers));
     dispatch(setTrickHistory(updatedHistory));
@@ -132,6 +124,7 @@ const ScoreBoard = () => {
       betAmount: isHardBet ? "-" : betAmount.toString(),
       trickAmount: isHardBet ? "-" : trickAmount.toString(),
       points: points,
+      players: players,
     };
 
     const newHist = [newLog, ...trickHistory];
