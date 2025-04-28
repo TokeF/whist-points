@@ -1,3 +1,4 @@
+import { ClassicStrategy } from "./ClassicStrategy";
 import IPointStrategy from "./IPointStrategy";
 import { LaksePointStrategy } from "./LaksePointStrategy";
 import { WinCountStrategy } from "./WinCountStrategy";
@@ -9,6 +10,8 @@ export default class StrategyFactory {
         return LaksePointStrategy;
       case "win-count":
         return WinCountStrategy;
+      case "classic":
+        return ClassicStrategy;
       default:
         throw new Error(`Unknown strategy: ${strategyName}`);
     }

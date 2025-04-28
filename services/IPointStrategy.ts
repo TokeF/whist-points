@@ -32,13 +32,26 @@ export const strategies: Record<string, IStrategy> = {
     description:
       "A strategy focused on maximizing points through specific tricks.",
   },
-  simple: {
-    key: "simple",
-    shortName: "Trick Count",
-    bets: {},
-    hardBets: {},
-    description:
-      "A straightforward strategy counting the number of tricks won.",
+  classic: {
+    key: "classic",
+    shortName: "classic",
+    bets: {
+      alm: 1,
+      gode: 1,
+      vip: 1,
+      halve: 1,
+      sans: 1,
+      sol: 1,
+      "ren sol": 1,
+      bordlægger: 1,
+    },
+    hardBets: {
+      sol: 3,
+      "ren sol": 6,
+      bordlægger: 12,
+      "ren bordlægger": 24,
+    },
+    description: "A simple and classic score strategy.",
   },
   "win-count": {
     key: "win-count",
