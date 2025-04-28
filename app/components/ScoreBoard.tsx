@@ -70,6 +70,7 @@ const ScoreBoard = () => {
   const saveGameStateToLocalStorage = async () => {
     try {
       const serializedState = JSON.stringify(gameState);
+      console.log("Saving game state to local storage:", serializedState);
       await AsyncStorage.setItem(gameId, serializedState);
 
       // Update the master list of game IDs

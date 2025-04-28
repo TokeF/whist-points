@@ -5,6 +5,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
+  Button,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import theme from "../styles/Theme";
@@ -22,7 +24,14 @@ import { useRouter } from "expo-router";
 import GlobalStyles from "../styles/GlobalStyles";
 
 const GameHistory = () => {
-  const [games, setGames] = useState<{ id: string; startDate: string }[]>([]);
+  const [games, setGames] = useState<
+    {
+      id: string;
+      date: string;
+      players: { name: string; score: number }[];
+      strategy: string;
+    }[]
+  >([]);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -35,8 +44,15 @@ const GameHistory = () => {
       for (const gameId of gameIds) {
         const gameData = await AsyncStorage.getItem(gameId);
         if (gameData) {
-          const { startDate } = JSON.parse(gameData);
-          loadedGames.push({ id: gameId, startDate });
+          const { players, trickHistory, startDate, id, strategy } =
+            JSON.parse(gameData);
+          console.log("Loaded game data:", gameData);
+          loadedGames.push({
+            id: gameId,
+            date: startDate,
+            players: players,
+            strategy: strategy,
+          });
         }
       }
       setGames(loadedGames);
@@ -63,6 +79,33 @@ const GameHistory = () => {
     }
   };
 
+  const clearHistory = async () => {
+    Alert.alert("Warning", "This will delete all game history. Are you sure?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            const gameCollection = await AsyncStorage.getItem("gameCollection");
+            const gameIds = gameCollection ? JSON.parse(gameCollection) : [];
+
+            for (const gameId of gameIds) {
+              await AsyncStorage.removeItem(gameId);
+            }
+            await AsyncStorage.removeItem("gameCollection");
+            setGames([]);
+          } catch (error) {
+            console.error("Failed to clear game history:", error);
+          }
+        },
+      },
+    ]);
+  };
+
   useFocusEffect(
     useCallback(() => {
       loadGames();
@@ -80,16 +123,50 @@ const GameHistory = () => {
         Previous Games
       </Text>
       <ScrollView contentContainerStyle={styles.container}>
-        {games.reverse().map((game) => (
-          <TouchableOpacity
-            key={game.id}
-            style={styles.gameItem}
-            onPress={() => handleGamePress(game.id)}
-          >
-            <Text style={styles.gameText}>Game Date: {game.startDate}</Text>
-          </TouchableOpacity>
-        ))}
+        {games.reverse().map((game) => {
+          const date = new Date(game.date);
+          const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString(
+            [],
+            { hour: "2-digit", minute: "2-digit" }
+          )}`;
+          const playerInitials = game.players
+            .slice(0, 4)
+            .map((player: { name: string; score: number }) =>
+              player.name.slice(0, 2)
+            )
+            .join(", ");
+          // const playerInitials = "he, to, fe, me";
+          console.log("player obj:", game.players);
+          console.log("Player initials:", playerInitials);
+
+          return (
+            <TouchableOpacity
+              key={game.id}
+              style={styles.gameItem}
+              onPress={() => handleGamePress(game.id)}
+            >
+              <Text style={styles.gameText}>
+                {formattedDate} - {game.strategy} - {playerInitials}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </ScrollView>
+      <TouchableOpacity
+        onPress={clearHistory}
+        style={[
+          GlobalStyles.button,
+          {
+            paddingTop: theme.spacing.medium,
+            width: "50%",
+            alignSelf: "center",
+            marginTop: 20,
+            alignItems: "center",
+          },
+        ]}
+      >
+        <Text style={GlobalStyles.buttonText}>Clear History</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
