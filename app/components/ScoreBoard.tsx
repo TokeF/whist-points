@@ -13,6 +13,7 @@ import TrickHistory from "./TrickHistory";
 import TrickModal from "./TrickModal";
 import HardBetModal from "./HardBetModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import theme from "../styles/Theme";
 
 const ScoreBoard = () => {
   const dispatch = useDispatch();
@@ -61,6 +62,30 @@ const ScoreBoard = () => {
     } else {
       setModalVisible(true);
     }
+  };
+
+  const undoLastAction = () => {
+    if (trickHistory.length === 0) {
+      alert("No actions to undo.");
+      return;
+    }
+
+    const lastLog = trickHistory[0];
+    const updatedHistory = trickHistory.slice(1);
+
+    const revertedPlayers = players.map((player) => {
+      const logPoints = lastLog.points;
+      if (
+        lastLog.caller === player.name ||
+        (lastLog.partner && lastLog.partner === player.name)
+      ) {
+        return { ...player, score: player.score - logPoints };
+      }
+      return { ...player, score: player.score + logPoints };
+    });
+
+    dispatch(setPlayers(revertedPlayers));
+    dispatch(setTrickHistory(updatedHistory));
   };
 
   useEffect(() => {
@@ -130,20 +155,40 @@ const ScoreBoard = () => {
         setSelectedBet={setSelectedBet}
         setSelectedBetAmount={setSelectedBetAmount}
       />
-      <TouchableOpacity
-        style={[
-          GlobalStyles.button,
-          {
-            width: "80%",
-            alignSelf: "center",
-            marginTop: 20,
-            alignItems: "center",
-          },
-        ]}
-        onPress={addPoints}
+      <View
+        style={{
+          flexDirection: "row",
+          width: "80%",
+          alignSelf: "center",
+          marginTop: 20,
+        }}
       >
-        <Text style={GlobalStyles.buttonText}>Add points</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            GlobalStyles.button,
+            {
+              flex: 4,
+              alignItems: "center",
+              marginRight: theme.spacing.small,
+            },
+          ]}
+          onPress={addPoints}
+        >
+          <Text style={GlobalStyles.buttonText}>Add points</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            GlobalStyles.button,
+            {
+              flex: 1,
+              alignItems: "center",
+            },
+          ]}
+          onPress={undoLastAction}
+        >
+          <Text style={GlobalStyles.buttonText}>Undo</Text>
+        </TouchableOpacity>
+      </View>
       <TrickHistory trickHistory={trickHistory} />
       {Object.keys(strategy.hardBets).includes(bet) ? (
         <HardBetModal
