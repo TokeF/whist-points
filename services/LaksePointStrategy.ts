@@ -50,8 +50,7 @@ const calculateHardBet = (
             (hardbetLostScore * selectedPlayers.length) /
               (4 - selectedPlayers.length)
           );
-        console.log("zeroSum", zeroSum);
-        console.log("hardbetLostScore", hardbetLostScore);
+
         return { ...player, score: player.score + zeroSum };
       } else {
         if (
@@ -64,8 +63,6 @@ const calculateHardBet = (
           (hardbetWonScore * hardBetWinners.length) /
             (4 - hardBetWinners.length)
         );
-        console.log("zeroSum", zeroSum);
-        console.log("hardbetWonScore", hardbetWonScore);
         return { ...player, score: player.score - zeroSum };
       }
     }),

@@ -30,21 +30,26 @@ export const ClassicStrategy: IPointStrategy = {
     trickAmount: number
   ): [number, Player[]] {
     let score = 0;
+    let opponentScore = 0;
+
     if (bet in strategies.classic.hardBets) {
       score = scoreFunctionHardBet(bet);
     } else {
       score = scoreFunctionRegular(bet, betAmount, trickAmount);
     }
 
-    if (betAmount > trickAmount) {
-      score *= -1;
-    }
-    let opponentScore = -score;
-
     // selvmakker
     if (selectedPlayers.length === 1) {
       score *= 3;
       opponentScore = score / 3;
+    } else {
+      opponentScore = score;
+    }
+
+    if (betAmount > trickAmount) {
+      score *= -1;
+    } else {
+      opponentScore *= -1;
     }
 
     return [
