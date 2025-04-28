@@ -27,13 +27,45 @@ export const ClassicStrategy: IPointStrategy = {
     selectedPlayers: string[],
     bet: string,
     betAmount: number,
-    trickAmount: number
+    trickAmount: number,
+    hardBetWinners: string[]
   ): [number, Player[]] {
     let score = 0;
     let opponentScore = 0;
 
     if (bet in strategies.classic.hardBets) {
-      score = scoreFunctionHardBet(bet);
+      const hardbetWonScore = scoreFunctionHardBet(bet);
+      const hardbetLostScore = -hardbetWonScore;
+      return [
+        hardBetWinners.length > 0 ? hardbetWonScore : hardbetLostScore,
+        players.map((player) => {
+          if (hardBetWinners.length === 0) {
+            if (selectedPlayers.includes(player.name)) {
+              return { ...player, score: player.score + hardbetLostScore };
+            }
+            let zeroSum =
+              -1 *
+              Math.ceil(
+                (hardbetLostScore * selectedPlayers.length) /
+                  (4 - selectedPlayers.length)
+              );
+
+            return { ...player, score: player.score + zeroSum };
+          } else {
+            if (
+              selectedPlayers.includes(player.name) &&
+              hardBetWinners.includes(player.name)
+            ) {
+              return { ...player, score: player.score + hardbetWonScore };
+            }
+            let zeroSum = Math.ceil(
+              (hardbetWonScore * hardBetWinners.length) /
+                (4 - hardBetWinners.length)
+            );
+            return { ...player, score: player.score - zeroSum };
+          }
+        }),
+      ];
     } else {
       score = scoreFunctionRegular(bet, betAmount, trickAmount);
     }
