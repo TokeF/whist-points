@@ -153,10 +153,10 @@ const GameHistory = () => {
         style={[
           GlobalStyles.button,
           {
-            paddingTop: theme.spacing.medium,
             width: "50%",
             alignSelf: "center",
-            marginTop: 20,
+            marginTop: theme.spacing.large,
+            marginBottom: theme.spacing.large,
             alignItems: "center",
           },
         ]}
