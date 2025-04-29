@@ -11,7 +11,6 @@ export const WinCountStrategy: IPointStrategy = {
     hardBetWinners: string[]
   ): [number, Player[]] {
     if (bet in strategies.winCount.hardBets) {
-      console.log("hardBetWinners", hardBetWinners);
       return [
         hardBetWinners.length > 0 ? 1 : -1,
         players.map((player) => {

@@ -75,7 +75,6 @@ const ScoreBoard = () => {
     const updatedHistory = trickHistory.slice(1);
 
     const revertedPlayers = lastLog.players;
-    console.log("Reverted players:", revertedPlayers);
 
     dispatch(setPlayers(revertedPlayers));
     dispatch(setTrickHistory(updatedHistory));
@@ -88,7 +87,6 @@ const ScoreBoard = () => {
   const saveGameStateToLocalStorage = async () => {
     try {
       const serializedState = JSON.stringify(gameState);
-      console.log("Saving game state to local storage:", serializedState);
       await AsyncStorage.setItem(gameId, serializedState);
 
       // Update the master list of game IDs
