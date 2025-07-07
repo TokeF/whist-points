@@ -11,9 +11,11 @@ The "Whist Point Tracker" is an application designed to manage and calculate sco
 - **Game History**: View and manage previous games, including loading saved games and clearing history.
 - **Interactive UI**: Dropdowns for bet selection, modals for trick amounts, and a scoreboard for real-time score updates.
 
+<img src="assets/demo.gif" alt="App Demo" width="500" height="300" />
+
 **A quick overview of tools used**
 
-- **Frameworks and Libraries**:
+- **Frameworks and Libraries**:![alt text](demo.gif)
 
   - React Native: For building cross-platform mobile applications.
   - Expo: To streamline development and deployment.
