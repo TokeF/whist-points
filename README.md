@@ -11,7 +11,7 @@ The "Whist Point Tracker" is an application designed to manage and calculate sco
 - **Game History**: View and manage previous games, including loading saved games and clearing history.
 - **Interactive UI**: Dropdowns for bet selection, modals for trick amounts, and a scoreboard for real-time score updates.
 
-  <img src="demo.gif" width="33%" />
+  <img src="demo.gif" width="33%" style="border-radius: 15px;"/>
 
 **A quick overview of tools used**
 
